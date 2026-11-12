@@ -29,6 +29,7 @@ dist/
 htmlcov/
 
 # Data is private by default; sample data requires manual review
+/data/generated/
 /data/*
 !/data/README.md
 !/data/sample/

@@ -2,7 +2,7 @@
 
 ## 2026-11-12 — initial local setup
 
-**Current status: in development. Local foundation verified and uploaded to private GitHub; authentication blocker resolved.**
+**Setup-stage status (historical): local foundation verified and uploaded to private GitHub; authentication blocker resolved. See latest milestone below for current status.**
 
 ### Completed
 
@@ -53,3 +53,32 @@ Resolve read access to the requested GitHub repository, fetch and inspect its hi
 No remaining blocker for initial setup or GitHub access. The project remains in development: no datasets, findings, measured business results or completed analytics integrations. No paid services were activated.
 
 Next planned milestone: define the measurement dictionary and synthetic data specification. That work has not started in this upload task.
+
+## 2026-11-12 — Milestone 1: measurement definitions and synthetic data
+
+**Current status: in development. Measurement and synthetic-data milestone implemented and verified.** This is the user-facing Milestone 1, corresponding to the measurement/synthetic-data item after local foundation in the original brief. Earlier “not started” notes above describe the historical setup stage.
+
+### What now works
+
+- Documented purchase and funnel conversion, AOV, net merchandise revenue, revenue per session, paid-media CAC proxy and net ROAS, including grains, windows, exclusions and attribution limits.
+- Added a field-level dictionary for seven requested tables plus a supporting campaign dimension. Event occurrence and ingestion timestamps are separate; money uses integer USD cents.
+- Implemented deterministic standard-library generation with a fixed default seed and configurable size/start. Campaign and transaction identifiers link consistently; spend remains campaign-day grain.
+- Added a strict baseline validator and nonmutating quality detector. Three separate hand-authored fixtures cover duplicate purchases, missing transaction IDs and late events.
+- Added 14 automated tests, including independent money calculations and deliberate corruption cases. **All 14 passed** on Python 3.14.8. Identical inputs produced byte-identical files and matching manifest hashes. No dependencies were added.
+- Default generated counts: customers **1,496**, sessions **2,700**, events **7,170**, orders **377**, order items **377**, refunds **79**, campaigns **4**, daily campaign spend **360**. These are synthetic counts only.
+- Documented assumptions, expected fixture handling and actual control totals in `docs/MILESTONE_1_VALIDATION.md`. Kept bulk output ignored and included only one 12-row linked illustration plus four independent fixture events.
+- Pre-commit review checked all 28 tracked/staged files: no credentials or private data found, no tracked ignored files, and no secret-pattern matches. Confirmed `.env`, `.venv`, private data and generated bulk files stay ignored. Git whitespace checks passed. The milestone commit is intended for the existing private `main` branch; final local/remote equality is verified after pushing.
+
+### Reproduction
+
+Generate baseline: `.venv/bin/python scripts/generate_sample.py`
+
+Run tests: `.venv/bin/python -m unittest discover -s tests -v`
+
+Optional generator settings: `--seed`, `--sessions`, `--start`. Default: seed 42, 2,700 sessions across 2026-01-01 through 2026-03-31. Refund observations extend beyond that session window. See `docs/SIMULATION_ASSUMPTIONS.md`.
+
+### Limitations and remaining work
+
+Synthetic probabilities demonstrate methods, not evidence about Puffy or real customers. No experiments, revenue improvements or real business findings are claimed. Perfect visitor linkage, simplified sequential journeys, same-session attribution and a limited order/refund lifecycle are intentional assumptions. First observed purchasers are not necessarily lifetime-new customers in a real dataset.
+
+No BigQuery, Shopify, GA4, Google Ads, Meta Ads, Tableau or Hotjar connection was created. No paid services were activated. Production ingestion, quarantine/backfills, real-data reconciliation, dashboards and business analysis remain planned. Stop here for this milestone; no implementation blocker remains.

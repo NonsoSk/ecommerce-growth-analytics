@@ -1,1 +1,1 @@
-"""In-development analytics project; no analysis implemented yet."""
+"""In-development analytics project with validated synthetic data generation."""

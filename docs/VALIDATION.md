@@ -1,6 +1,6 @@
 # Validation requirements
 
-No analytical validation has run yet because no data has been introduced. Environment checks do not validate business conclusions.
+Synthetic schema, reproducibility and arithmetic checks now run through the automated test suite; see MILESTONE_1_VALIDATION.md for actual results. No real data or business conclusions have been validated. Environment and synthetic checks do not validate real business conclusions.
 
 Before analysis, document each table's grain, unique key, source, extraction time, time zone, currency and applicable date range. Check missing fields, duplicates, valid values, source totals and join cardinality; avoid inflated revenue from many-to-many joins.
 

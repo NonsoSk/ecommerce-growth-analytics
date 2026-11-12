@@ -16,7 +16,7 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 ## Milestones and acceptance criteria
 
 1. **Local foundation:** folders, documentation, isolated Python, safety rules and verification. Completed and uploaded to private GitHub; the remote was empty, so no merge was needed.
-2. **Measurement plan and synthetic data:** define grain, keys, date windows, time zones, currencies, consent limitations, attribution and revenue rules; create labeled synthetic fixtures with known expected totals.
+2. **Measurement plan and synthetic data (user-facing Milestone 1):** implemented definitions, linked schemas, deterministic 90-day baseline, separate quality fixtures and automated checks. See docs/MEASUREMENT_PLAN.md and docs/SIMULATION_ASSUMPTIONS.md. No business analysis or live integration is implied.
 3. **Source connections:** authorize each account separately; document permissions, extraction method, freshness and limitations. No paid service activation without approval.
 4. **Quality and reconciliation:** test uniqueness, completeness, joins and totals; quantify matched and unmatched records; explain residual differences before interpreting performance.
 5. **Analysis and visualization:** build reproducible funnel and acquisition analyses and a Tableau dashboard with definitions and traceable evidence.
@@ -25,8 +25,8 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 
 ## Scope and constraints
 
-Initial setup does not include data collection, analysis, external account configuration, dashboards or experiments. Revenue definitions must explicitly address refunds, cancellations, tax, shipping, discounts and currencies. Ad-platform attributed conversions can overlap and must not be added as unique orders. Attribution is not proof of incremental impact.
+The current milestone includes local synthetic generation and validation, not real data collection, business analysis, external account configuration, dashboards or experiments. Revenue definitions address refunds, cancellations, tax, shipping, discounts and currencies. Ad-platform attributed conversions can overlap and must not be added as unique orders. Attribution is not proof of incremental impact.
 
 ## Planned deliverables
 
-A measurement dictionary, source mapping, data quality checks, purchase and revenue reconciliation, funnel analysis, acquisition analysis, dashboard, prioritized experiment backlog and validation log. These are planned outputs, not completed work.
+A measurement plan, data dictionary, synthetic quality checks and milestone validation record are now implemented. Real source mapping, purchase and revenue analysis, funnel and acquisition analysis, dashboard and prioritized experiment backlog remain planned.

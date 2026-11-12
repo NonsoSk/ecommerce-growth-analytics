@@ -1,10 +1,10 @@
 # E-commerce Growth Analytics
 
-**Status: in development — initial setup verified and uploaded to the private GitHub repository.**
+**Status: in development — measurement definitions and reproducible synthetic data implemented.**
 
 A portfolio project for a fictional direct-to-consumer mattress retailer. The goal is to analyze acquisition spend and customer journeys, identify conversion problems, reconcile purchases and revenue, and recommend prioritized experiments.
 
-There are no datasets, findings, measured business results or completed integrations yet. Future sample data will be explicitly labeled synthetic; it will not represent a real retailer.
+An explicitly labeled synthetic dataset is now available locally through the generator. There are no real datasets, business findings, measured improvements or completed analytics integrations. Synthetic patterns are not evidence about Puffy or real customers.
 
 ## Run locally
 
@@ -20,6 +20,28 @@ python -m pip check
 
 Activation makes `python` use this project's isolated environment. You can also run `.venv/bin/python scripts/verify_environment.py` directly. `deactivate` exits it.
 
+## Milestone 1: measurement and synthetic data
+
+Generate the default 90-day baseline from the repository root:
+
+```sh
+.venv/bin/python scripts/generate_sample.py
+```
+
+Run the automated tests:
+
+```sh
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+Optional generator arguments: `--seed 7 --sessions 900 --start 2026-02-01`. The default is seed 42, 2,700 sessions, starting 2026-01-01. Output goes to ignored `data/generated/baseline/`, with eight linked JSON tables and a manifest containing row counts, file hashes and monetary control totals. Repeating the same configuration on the verified Python environment produces identical bytes. No new dependencies are required.
+
+The default has 1,496 visitor identities, 2,700 sessions, 7,170 events, 377 orders, 377 order items, 79 partial refunds, four campaigns and 360 campaign-day spend rows. These are simulation counts, not business results. Separate quality fixtures cover duplicate purchases, missing transaction IDs and late events. Only a small linked illustration is committed; bulk output stays local.
+
+Read the [measurement plan](docs/MEASUREMENT_PLAN.md), [data dictionary](docs/DATA_DICTIONARY.md), [simulation assumptions](docs/SIMULATION_ASSUMPTIONS.md) and [fixture handling rules](docs/QUALITY_FIXTURES.md). The rules distinguish sessions, orders and customers, original payments and refunds, and attributed performance from causal impact. Advertising spend is never repeated on individual event rows.
+
+The current generator assumes perfect identity linking, fixed journey steps, same-session attribution and simplified prices/refunds. It does not model all real tracking gaps or order lifecycles. Real source connections, analytical findings, dashboards and experiments remain planned.
+
 ## Project layout
 
 | Location | Purpose |
@@ -27,11 +49,12 @@ Activation makes `python` use this project's isolated environment. You can also 
 | `src/ecommerce_growth/` | Reusable Python analysis code |
 | `sql/` | SQL transformations and reconciliation queries |
 | `notebooks/` | Exploration with reviewed, sanitized outputs |
-| `tests/` | Future checks for data quality and analysis logic |
-| `scripts/` | Local setup verification |
+| `tests/` | Automated synthetic-data checks and separate quality fixtures |
+| `scripts/` | Local verification and synthetic generation commands |
 | `docs/` | Definitions, integration plans and validation records |
 | `reports/` | Reviewed analysis summaries; generated outputs ignored |
-| `data/sample/` | Future approved synthetic examples |
+| `data/sample/` | Small reviewed synthetic illustration |
+| `data/generated/` | Ignored generated baseline and manifest |
 | `data/private/` | Ignored local datasets; never commit |
 
 ## Planned tools

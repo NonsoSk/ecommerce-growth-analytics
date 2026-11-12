@@ -1,0 +1,27 @@
+{
+  "label": "SYNTHETIC QUALITY FIXTURES ONLY; independent of baseline, never append to it",
+  "cases": [
+    {
+      "name": "duplicate_purchase",
+      "events": [
+        {"event_id": "fixture_dup_a", "session_id": "fixture_session", "event_name": "purchase", "transaction_id": "fixture_tx", "occurred_at": "2026-01-01T12:04:00Z", "ingested_at": "2026-01-01T12:04:05Z"},
+        {"event_id": "fixture_dup_b", "session_id": "fixture_session", "event_name": "purchase", "transaction_id": "fixture_tx", "occurred_at": "2026-01-01T12:04:00Z", "ingested_at": "2026-01-01T12:04:06Z"}
+      ],
+      "expected": {"duplicate_purchase": ["fixture_dup_b"], "missing_transaction_id": [], "late_arrival": []}
+    },
+    {
+      "name": "missing_transaction_id",
+      "events": [
+        {"event_id": "fixture_missing", "session_id": "fixture_session", "event_name": "purchase", "transaction_id": null, "occurred_at": "2026-01-01T12:04:00Z", "ingested_at": "2026-01-01T12:04:05Z"}
+      ],
+      "expected": {"duplicate_purchase": [], "missing_transaction_id": ["fixture_missing"], "late_arrival": []}
+    },
+    {
+      "name": "late_arrival",
+      "events": [
+        {"event_id": "fixture_late", "session_id": "fixture_session", "event_name": "view_item", "transaction_id": null, "occurred_at": "2026-01-01T12:01:00Z", "ingested_at": "2026-01-04T12:01:00Z"}
+      ],
+      "expected": {"duplicate_purchase": [], "missing_transaction_id": [], "late_arrival": ["fixture_late"]}
+    }
+  ]
+}

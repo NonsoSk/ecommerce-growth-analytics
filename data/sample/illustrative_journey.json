@@ -1,0 +1,119 @@
+{
+  "ad_spend_daily": [
+    {
+      "campaign_id": "syn_google_prospecting",
+      "currency": "USD",
+      "spend_cents": 8582,
+      "spend_date": "2026-01-06"
+    }
+  ],
+  "campaigns": [
+    {
+      "audience": "prospecting",
+      "campaign_id": "syn_google_prospecting",
+      "channel": "google",
+      "currency": "USD"
+    }
+  ],
+  "customers": [
+    {
+      "customer_id": "syn_c000094",
+      "first_seen_at": "2026-01-06T09:02:07Z"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "syn_e0000415",
+      "event_name": "session_start",
+      "ingested_at": "2026-01-06T09:02:12Z",
+      "occurred_at": "2026-01-06T09:02:07Z",
+      "session_id": "syn_s000167",
+      "transaction_id": null
+    },
+    {
+      "event_id": "syn_e0000416",
+      "event_name": "view_item",
+      "ingested_at": "2026-01-06T09:03:12Z",
+      "occurred_at": "2026-01-06T09:03:07Z",
+      "session_id": "syn_s000167",
+      "transaction_id": null
+    },
+    {
+      "event_id": "syn_e0000417",
+      "event_name": "add_to_cart",
+      "ingested_at": "2026-01-06T09:04:12Z",
+      "occurred_at": "2026-01-06T09:04:07Z",
+      "session_id": "syn_s000167",
+      "transaction_id": null
+    },
+    {
+      "event_id": "syn_e0000418",
+      "event_name": "begin_checkout",
+      "ingested_at": "2026-01-06T09:05:12Z",
+      "occurred_at": "2026-01-06T09:05:07Z",
+      "session_id": "syn_s000167",
+      "transaction_id": null
+    },
+    {
+      "event_id": "syn_e0000419",
+      "event_name": "purchase",
+      "ingested_at": "2026-01-06T09:06:12Z",
+      "occurred_at": "2026-01-06T09:06:07Z",
+      "session_id": "syn_s000167",
+      "transaction_id": "syn_tx000020"
+    }
+  ],
+  "label": "SYNTHETIC ILLUSTRATION ONLY; first paid-channel refunded order from default seed 42, not a complete dataset",
+  "order_items": [
+    {
+      "currency": "USD",
+      "discount_cents": 0,
+      "net_merchandise_cents": 119900,
+      "order_id": "syn_o000020",
+      "order_item_id": "syn_i000020",
+      "product_id": "syn_mattress_119900",
+      "quantity": 1,
+      "unit_price_cents": 119900
+    }
+  ],
+  "orders": [
+    {
+      "currency": "USD",
+      "customer_id": "syn_c000094",
+      "discount_cents": 0,
+      "gross_merchandise_cents": 119900,
+      "order_id": "syn_o000020",
+      "ordered_at": "2026-01-06T09:06:07Z",
+      "session_id": "syn_s000167",
+      "shipping_cents": 0,
+      "status": "paid",
+      "tax_cents": 9592,
+      "total_paid_cents": 129492,
+      "transaction_id": "syn_tx000020"
+    }
+  ],
+  "refunds": [
+    {
+      "currency": "USD",
+      "ingested_at": "2026-01-15T09:11:07Z",
+      "merchandise_refund_cents": 11990,
+      "order_id": "syn_o000020",
+      "order_item_id": "syn_i000020",
+      "refund_id": "syn_r000003",
+      "refunded_at": "2026-01-15T09:06:07Z",
+      "shipping_refund_cents": 0,
+      "tax_refund_cents": 959
+    }
+  ],
+  "sessions": [
+    {
+      "campaign_id": "syn_google_prospecting",
+      "channel": "google",
+      "customer_id": "syn_c000094",
+      "device": "mobile",
+      "ended_at": "2026-01-06T09:07:07Z",
+      "session_id": "syn_s000167",
+      "started_at": "2026-01-06T09:02:07Z"
+    }
+  ]
+}

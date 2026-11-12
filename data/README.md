@@ -1,5 +1,7 @@
 # Data handling
 
-No datasets are included. `sample/` is reserved for reviewed, clearly labeled synthetic examples with documented generation assumptions and expected totals. `private/` is an ignored local directory for future approved private inputs; Git will not preserve this empty folder when cloned.
+- `generated/baseline/`: ignored bulk synthetic tables and manifest, produced by `.venv/bin/python scripts/generate_sample.py`. Never commit these generated files.
+- `sample/`: only manually reviewed, small, explicitly labeled synthetic illustrations.
+- `private/`: ignored location for future approved private inputs; currently no private data. Git does not preserve empty folders.
 
-Raw data is ignored by default. Do not move private files into `sample/` to bypass ignore rules. CSV and JSON samples are permitted there only after manual review. Keep credentials outside data folders.
+No real retailer or customer data is included. Credentials belong outside data folders. Do not move private or bulk files into `sample/` to bypass ignore rules. Separate intentionally invalid fixtures live in `tests/fixtures/` and are not part of the baseline.
