@@ -1,6 +1,6 @@
 # Integration plan
 
-**All external services are planned and disconnected.** No credentials have been supplied, accounts configured or paid services activated.
+**All analytics integrations are planned and disconnected.** No analytics credentials have been supplied, analytics accounts configured or paid services activated. GitHub repository access is verified separately below.
 
 | Tool | Intended role | Validation before use |
 | --- | --- | --- |
@@ -16,8 +16,8 @@
 
 Connect sources gradually with least-privilege access. Document field mappings, grain, extraction timestamps, refresh cadence and limitations. Prefer approved synthetic data until source access and data handling are agreed.
 
-## GitHub access blocker
+## GitHub access — resolved 2026-11-12
 
-The initial unauthenticated read of repository refs failed because GitHub requested a username. This does not establish whether the repository is private, missing or populated. The remote URL is configured locally, but no remote files have been fetched.
+The initial authentication blocker is resolved. GitHub CLI verified the active account as `NonsoSk` and the repository as private. Origin is `https://github.com/NonsoSk/ecommerce-growth-analytics.git`. Remote inspection and fetch found no branches or commits; no existing remote files needed reconciliation.
 
-When access is available, inspect `git remote -v`, fetch origin, then inspect its default branch and history. If populated, compare files and reconcile on a separate branch or temporary checkout; if histories are unrelated, preserve the local setup commit and apply reviewed changes onto the remote history. Resolve overlaps manually. Never force-push or assume the remote is empty.
+The reviewed initial setup was pushed to `main`, with upstream `origin/main`. Its local and remote commit hashes matched after upload. Keep the repository private, inspect future remote changes before pushing, and never force-push. This source-control connection does not establish any analytics integration.

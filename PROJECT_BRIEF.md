@@ -15,7 +15,7 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 
 ## Milestones and acceptance criteria
 
-1. **Local foundation:** folders, documentation, isolated Python, safety rules and verification. Remote reconciliation remains pending access.
+1. **Local foundation:** folders, documentation, isolated Python, safety rules and verification. Completed and uploaded to private GitHub; the remote was empty, so no merge was needed.
 2. **Measurement plan and synthetic data:** define grain, keys, date windows, time zones, currencies, consent limitations, attribution and revenue rules; create labeled synthetic fixtures with known expected totals.
 3. **Source connections:** authorize each account separately; document permissions, extraction method, freshness and limitations. No paid service activation without approval.
 4. **Quality and reconciliation:** test uniqueness, completeness, joins and totals; quantify matched and unmatched records; explain residual differences before interpreting performance.

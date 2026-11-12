@@ -1,6 +1,6 @@
 # E-commerce Growth Analytics
 
-**Status: in development — initial local setup only.**
+**Status: in development — initial setup verified and uploaded to the private GitHub repository.**
 
 A portfolio project for a fictional direct-to-consumer mattress retailer. The goal is to analyze acquisition spend and customer journeys, identify conversion problems, reconcile purchases and revenue, and recommend prioritized experiments.
 
@@ -44,7 +44,7 @@ See [PROJECT_BRIEF.md](PROJECT_BRIEF.md) for milestones, [docs/VALIDATION.md](do
 
 Keep credentials in ignored local configuration or outside this repository. `.env.example` contains placeholders only and is not automatically loaded by Python. Real customer data, raw exports and sensitive notebook output must not be committed. Ignore rules are a guardrail, not a substitute for reviewing staged files.
 
-Origin is `https://github.com/NonsoSk/ecommerce-growth-analytics.git`. Remote inspection requested authentication, so its contents and history remain unknown. Before a future push, fetch and inspect that history; preserve both local and remote work. No push is part of this setup.
+Origin is `https://github.com/NonsoSk/ecommerce-growth-analytics.git`. GitHub access was verified as `NonsoSk` on 2026-11-12, and the repository was confirmed private. Inspection and fetch found no existing remote branches or commits, so no merge was needed. The reviewed initial project, including this README, was uploaded on `main`, which tracks `origin/main`; the initial local and remote commit hashes matched. Continue reviewing staged files and fetching remote history before future pushes. Preserve existing work and never force-push.
 
 ## Interview explanation
 
