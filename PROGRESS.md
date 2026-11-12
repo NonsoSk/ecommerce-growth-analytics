@@ -82,3 +82,39 @@ Optional generator settings: `--seed`, `--sessions`, `--start`. Default: seed 42
 Synthetic probabilities demonstrate methods, not evidence about Puffy or real customers. No experiments, revenue improvements or real business findings are claimed. Perfect visitor linkage, simplified sequential journeys, same-session attribution and a limited order/refund lifecycle are intentional assumptions. First observed purchasers are not necessarily lifetime-new customers in a real dataset.
 
 No BigQuery, Shopify, GA4, Google Ads, Meta Ads, Tableau or Hotjar connection was created. No paid services were activated. Production ingestion, quarantine/backfills, real-data reconciliation, dashboards and business analysis remain planned. Stop here for this milestone; no implementation blocker remains.
+
+## 2026-11-12 — Milestone 2: reproducible local SQL analysis
+
+**Current status: in development. Local SQLite analysis of synthetic data implemented and verified.** Earlier milestone status statements are historical. No external analytics connections, dashboards or experiments were created.
+
+### Foundation review and implementation
+
+- Read the project instructions, brief, progress, measurement plan, dictionary and generator/tests before changes. Preserved the generator and all simulated values.
+- Clarified visitor identities versus purchasing visitors, orders versus converting sessions, and first observed versus first-ever purchases. Ledger conversion/revenue no longer ambiguously depends on event delivery; event-based ordered funnel purchases are reported separately.
+- Documented same-session attribution, missing landing-page/source-medium fields, order-cohort refunds, incomplete observation and the absence of financial ingestion timestamps in `docs/MEASUREMENT_REVIEW.md`.
+- Added explicit SQLite schemas, enforced financial relationships/amount checks, raw-event auditing, separate readable SQL analyses, campaign-day key unions, null ratio reasons and ignored CSV exports. Items/refunds are aggregated before joining; spend is never repeated across events.
+- Added an independent hand-calculated fixture with multiple items, orders and partial refunds, repeat purchases, skipped/out-of-order journeys, zero-conversion spend days and missing spend. Exercised the original quality fixtures unchanged through isolated SQLite contexts.
+
+### Actual verification results
+
+- **29 tests passed**: 14 original generator tests and 15 SQL analysis tests, on Python 3.14.8 / SQLite 3.50.4. No dependencies were added.
+- Full default pipeline repeated successfully with identical CSV/report/metadata hashes; raw baseline files stayed byte-identical and database row counts did not grow. Input hash mismatches fail before replacing validated outputs.
+- Repeated the full pipeline twice again after the user's upgrade: all 29 tests passed each time. An explicit 12-part duplicate audit found zero duplicate visitor/session/event/order/transaction/item/refund keys, campaign-day keys, purchase transactions or derived order/session/campaign-day rows. Intentional duplicate test deliveries remain isolated in fixtures and are quarantined by the audit.
+- All seven reconciliation differences are **zero**: session count, order count, merchandise revenue, refunds, net revenue, spend and paid-plus-unpaid net revenue.
+- Baseline purchase reconciliation: **377 matched orders**, no excluded purchase deliveries; all **7,170** raw events accepted, zero late events and zero skipped/out-of-order sessions. This reflects a deliberately clean simulation, not real tracking completeness.
+- Separate original quality fixtures: one accepted canonical purchase, one duplicate quarantined, one missing transaction ID quarantined and one late view included on restatement. Hand-calculated late processing changes funnel purchases from 1 to 2 once, with four ledger orders unchanged.
+- Default cohort: 2026-01-01 inclusive to 2026-04-01 exclusive; observation cutoff 2026-04-16 exclusive, UTC/USD, seed 42, 2,700 sessions. All modeled refund windows are mature at this cutoff.
+- Data SHA-256: `e486a1983c44d36bc6b57eddda6849feff49092ae3acea3b39d319e366f2e5da`. Input table and SQL fingerprints are recorded in generated run metadata.
+- Pre-commit review covered all 48 tracked/staged files: zero secret-pattern matches, no private data files and no tracked ignored/environment/generated files. Only three small, explicitly synthetic JSON examples/fixtures are tracked. Confirmed the original generator and its tests are unchanged; Git whitespace checks passed.
+
+### Computed simulation summary
+
+1,496 observed visitors; 331 purchasing visitors; 377 orders across 377 converting sessions. Order conversion **13.96%**; pre-refund merchandise AOV **$915.14**; merchandise revenue **$345,007.20**; merchandise refunds **$14,084.25**; net merchandise revenue **$330,922.95**; revenue/session **$122.56**. Paid spend **$44,259.88**; same-session paid-attributed net revenue **$173,184.63**; 180 first-observed paid-attributed purchasers; net paid ROAS **3.91x**; paid-media CAC proxy **$245.89**.
+
+These are synthetic outputs, not evidence about Puffy, real customers, causal lift or commercial improvements. The reviewed `reports/MILESTONE_2_ANALYSIS.md` contains calculated tables, limitations and three investigation ideas, each with evidence and alternative explanations.
+
+### Reproduce and remaining scope
+
+Run `.venv/bin/python scripts/run_analysis.py` for tests and the complete pipeline. Outputs stay ignored under `data/generated/analysis/`; the reviewed Markdown report is explicitly allowed in Git. See `docs/SQL_PIPELINE.md` for output grains, fixture arithmetic, null semantics and planned BigQuery migration.
+
+Limitations: no landing pages, true lifetime customer history, complete financial ingestion history, cross-session attribution, real source data or production warehouse. BigQuery, Shopify, GA4, advertising platforms, Hotjar and Tableau remain disconnected. No paid service or A/B experiment was activated. Stop after this milestone; no implementation blocker remains. Commit/push and final local/remote verification follow the staged privacy review.

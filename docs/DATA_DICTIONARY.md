@@ -105,3 +105,7 @@ Every campaign has all 90 spend dates, including dates with no attributed sessio
 ## Availability and metadata
 
 Only events and refunds model ingestion timestamps. Customers, sessions, orders, items and spend are complete static synthetic snapshots; they do not model delayed ingestion or evolving order status. Do not infer real extraction freshness from them. `manifest.json` records the seed, generator version, input size, start/end dates, observation cutoff, currency, timezone, row counts, SHA-256 hashes and control totals. There is deliberately no machine time in generated files so identical inputs produce identical bytes on the verified Python 3.14 environment.
+
+## Milestone 2 analytical interpretation
+
+The raw schema and simulated values are unchanged. `customers` means observed visitor identities; purchasing customers are the subset with paid orders. Landing page, source/medium, click IDs and event revenue amounts are absent. SQLite's copied `events` table deliberately retains invalid transaction/session references for audit; the table above describes the clean baseline contract, not a rule that invalid raw events must be discarded. See SQL_PIPELINE.md for explicit load constraints, derived views and output grains.

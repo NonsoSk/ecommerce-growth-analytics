@@ -49,6 +49,7 @@ htmlcov/
 # Generated artifacts may contain customer information
 /reports/*
 !/reports/README.md
+!/reports/MILESTONE_2_ANALYSIS.md
 /notebooks/.ipynb_checkpoints/
 **/.ipynb_checkpoints/
 *.log

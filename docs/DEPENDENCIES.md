@@ -14,3 +14,5 @@ Before adding pandas, NumPy, notebook tooling, a test framework or a cloud SDK:
 4. If a required package lacks Python 3.14 support, explain the constraint before proposing a supported interpreter and rebuilding the environment. Do not silently fall back to Apple's Python.
 
 Package compatibility has not been claimed for future integrations. Those dependencies will be selected when their milestones begin.
+
+Milestone 2 uses standard-library `sqlite3`, `csv` and `unittest` for local analysis. Verified Python 3.14.8 includes SQLite 3.50.4, which supports the chosen STRICT tables and window functions. No packages or interpreter changes were needed. A future environment requires SQLite 3.37+ for this schema, independently of its Python version.

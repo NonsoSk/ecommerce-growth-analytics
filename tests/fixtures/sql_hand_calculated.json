@@ -1,0 +1,424 @@
+{
+  "label": "SYNTHETIC HAND-CALCULATED SQL FIXTURE; independent of baseline generator",
+  "tables": {
+    "campaigns": [
+      {
+        "campaign_id": "fixture_a",
+        "channel": "google",
+        "audience": "fixture",
+        "currency": "USD"
+      },
+      {
+        "campaign_id": "fixture_b",
+        "channel": "meta",
+        "audience": "fixture",
+        "currency": "USD"
+      }
+    ],
+    "customers": [
+      {
+        "customer_id": "fixture_c1",
+        "first_seen_at": "2026-01-01T12:00:00Z"
+      },
+      {
+        "customer_id": "fixture_c2",
+        "first_seen_at": "2026-01-02T12:00:00Z"
+      },
+      {
+        "customer_id": "fixture_c3",
+        "first_seen_at": "2026-01-03T12:00:00Z"
+      }
+    ],
+    "sessions": [
+      {
+        "session_id": "fixture_session",
+        "customer_id": "fixture_c1",
+        "started_at": "2026-01-01T12:00:00Z",
+        "ended_at": "2026-01-01T12:10:00Z",
+        "channel": "google",
+        "campaign_id": "fixture_a",
+        "device": "mobile"
+      },
+      {
+        "session_id": "fixture_s2",
+        "customer_id": "fixture_c1",
+        "started_at": "2026-01-02T12:00:00Z",
+        "ended_at": "2026-01-02T12:10:00Z",
+        "channel": "direct",
+        "campaign_id": null,
+        "device": "mobile"
+      },
+      {
+        "session_id": "fixture_s3",
+        "customer_id": "fixture_c2",
+        "started_at": "2026-01-02T12:00:00Z",
+        "ended_at": "2026-01-02T12:10:00Z",
+        "channel": "meta",
+        "campaign_id": "fixture_b",
+        "device": "desktop"
+      },
+      {
+        "session_id": "fixture_s4",
+        "customer_id": "fixture_c3",
+        "started_at": "2026-01-03T12:00:00Z",
+        "ended_at": "2026-01-03T12:10:00Z",
+        "channel": "google",
+        "campaign_id": "fixture_a",
+        "device": "mobile"
+      },
+      {
+        "session_id": "fixture_s5",
+        "customer_id": "fixture_c3",
+        "started_at": "2026-01-03T12:00:00Z",
+        "ended_at": "2026-01-03T12:10:00Z",
+        "channel": "organic",
+        "campaign_id": null,
+        "device": "mobile"
+      }
+    ],
+    "events": [
+      {
+        "event_id": "fixture_e1",
+        "session_id": "fixture_session",
+        "event_name": "session_start",
+        "occurred_at": "2026-01-01T12:00:00Z",
+        "ingested_at": "2026-01-01T12:00:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e2",
+        "session_id": "fixture_session",
+        "event_name": "view_item",
+        "occurred_at": "2026-01-01T12:01:00Z",
+        "ingested_at": "2026-01-01T12:01:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e3",
+        "session_id": "fixture_session",
+        "event_name": "add_to_cart",
+        "occurred_at": "2026-01-01T12:02:00Z",
+        "ingested_at": "2026-01-01T12:02:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e4",
+        "session_id": "fixture_session",
+        "event_name": "begin_checkout",
+        "occurred_at": "2026-01-01T12:03:00Z",
+        "ingested_at": "2026-01-01T12:03:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e5",
+        "session_id": "fixture_session",
+        "event_name": "purchase",
+        "occurred_at": "2026-01-01T12:04:00Z",
+        "ingested_at": "2026-01-01T12:04:05Z",
+        "transaction_id": "fixture_tx"
+      },
+      {
+        "event_id": "fixture_e6",
+        "session_id": "fixture_session",
+        "event_name": "purchase",
+        "occurred_at": "2026-01-01T12:05:00Z",
+        "ingested_at": "2026-01-01T12:05:05Z",
+        "transaction_id": "fixture_tx2"
+      },
+      {
+        "event_id": "fixture_e7",
+        "session_id": "fixture_s2",
+        "event_name": "session_start",
+        "occurred_at": "2026-01-02T12:00:00Z",
+        "ingested_at": "2026-01-02T12:00:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e8",
+        "session_id": "fixture_s2",
+        "event_name": "view_item",
+        "occurred_at": "2026-01-02T12:01:00Z",
+        "ingested_at": "2026-01-04T12:01:00Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e9",
+        "session_id": "fixture_s2",
+        "event_name": "add_to_cart",
+        "occurred_at": "2026-01-02T12:02:00Z",
+        "ingested_at": "2026-01-02T12:02:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e10",
+        "session_id": "fixture_s2",
+        "event_name": "begin_checkout",
+        "occurred_at": "2026-01-02T12:03:00Z",
+        "ingested_at": "2026-01-02T12:03:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e11",
+        "session_id": "fixture_s2",
+        "event_name": "purchase",
+        "occurred_at": "2026-01-02T12:04:00Z",
+        "ingested_at": "2026-01-02T12:04:05Z",
+        "transaction_id": "fixture_tx3"
+      },
+      {
+        "event_id": "fixture_e12",
+        "session_id": "fixture_s3",
+        "event_name": "session_start",
+        "occurred_at": "2026-01-02T12:00:00Z",
+        "ingested_at": "2026-01-02T12:00:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e13",
+        "session_id": "fixture_s3",
+        "event_name": "add_to_cart",
+        "occurred_at": "2026-01-02T12:01:00Z",
+        "ingested_at": "2026-01-02T12:01:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e14",
+        "session_id": "fixture_s3",
+        "event_name": "view_item",
+        "occurred_at": "2026-01-02T12:02:00Z",
+        "ingested_at": "2026-01-02T12:02:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e15",
+        "session_id": "fixture_s3",
+        "event_name": "begin_checkout",
+        "occurred_at": "2026-01-02T12:03:00Z",
+        "ingested_at": "2026-01-02T12:03:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e16",
+        "session_id": "fixture_s3",
+        "event_name": "purchase",
+        "occurred_at": "2026-01-02T12:04:00Z",
+        "ingested_at": "2026-01-02T12:04:05Z",
+        "transaction_id": "fixture_tx4"
+      },
+      {
+        "event_id": "fixture_e17",
+        "session_id": "fixture_s4",
+        "event_name": "session_start",
+        "occurred_at": "2026-01-03T12:00:00Z",
+        "ingested_at": "2026-01-03T12:00:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e18",
+        "session_id": "fixture_s4",
+        "event_name": "view_item",
+        "occurred_at": "2026-01-03T12:01:00Z",
+        "ingested_at": "2026-01-03T12:01:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e19",
+        "session_id": "fixture_s4",
+        "event_name": "add_to_cart",
+        "occurred_at": "2026-01-03T12:02:00Z",
+        "ingested_at": "2026-01-03T12:02:05Z",
+        "transaction_id": null
+      },
+      {
+        "event_id": "fixture_e20",
+        "session_id": "fixture_s5",
+        "event_name": "view_item",
+        "occurred_at": "2026-01-03T12:01:00Z",
+        "ingested_at": "2026-01-03T12:01:05Z",
+        "transaction_id": null
+      }
+    ],
+    "orders": [
+      {
+        "order_id": "fixture_o1",
+        "transaction_id": "fixture_tx",
+        "customer_id": "fixture_c1",
+        "session_id": "fixture_session",
+        "ordered_at": "2026-01-01T12:04:00Z",
+        "currency": "USD",
+        "status": "paid",
+        "gross_merchandise_cents": 16000,
+        "discount_cents": 1000,
+        "tax_cents": 0,
+        "shipping_cents": 0,
+        "total_paid_cents": 15000
+      },
+      {
+        "order_id": "fixture_o2",
+        "transaction_id": "fixture_tx2",
+        "customer_id": "fixture_c1",
+        "session_id": "fixture_session",
+        "ordered_at": "2026-01-01T12:05:00Z",
+        "currency": "USD",
+        "status": "paid",
+        "gross_merchandise_cents": 5000,
+        "discount_cents": 0,
+        "tax_cents": 0,
+        "shipping_cents": 0,
+        "total_paid_cents": 5000
+      },
+      {
+        "order_id": "fixture_o3",
+        "transaction_id": "fixture_tx3",
+        "customer_id": "fixture_c1",
+        "session_id": "fixture_s2",
+        "ordered_at": "2026-01-02T12:04:00Z",
+        "currency": "USD",
+        "status": "paid",
+        "gross_merchandise_cents": 7000,
+        "discount_cents": 0,
+        "tax_cents": 0,
+        "shipping_cents": 0,
+        "total_paid_cents": 7000
+      },
+      {
+        "order_id": "fixture_o4",
+        "transaction_id": "fixture_tx4",
+        "customer_id": "fixture_c2",
+        "session_id": "fixture_s3",
+        "ordered_at": "2026-01-02T12:04:00Z",
+        "currency": "USD",
+        "status": "paid",
+        "gross_merchandise_cents": 8000,
+        "discount_cents": 0,
+        "tax_cents": 0,
+        "shipping_cents": 0,
+        "total_paid_cents": 8000
+      }
+    ],
+    "order_items": [
+      {
+        "order_item_id": "fixture_i1",
+        "order_id": "fixture_o1",
+        "product_id": "fixture_product",
+        "quantity": 1,
+        "unit_price_cents": 10000,
+        "discount_cents": 1000,
+        "net_merchandise_cents": 9000,
+        "currency": "USD"
+      },
+      {
+        "order_item_id": "fixture_i2",
+        "order_id": "fixture_o1",
+        "product_id": "fixture_product",
+        "quantity": 2,
+        "unit_price_cents": 3000,
+        "discount_cents": 0,
+        "net_merchandise_cents": 6000,
+        "currency": "USD"
+      },
+      {
+        "order_item_id": "fixture_i3",
+        "order_id": "fixture_o2",
+        "product_id": "fixture_product",
+        "quantity": 1,
+        "unit_price_cents": 5000,
+        "discount_cents": 0,
+        "net_merchandise_cents": 5000,
+        "currency": "USD"
+      },
+      {
+        "order_item_id": "fixture_i4",
+        "order_id": "fixture_o3",
+        "product_id": "fixture_product",
+        "quantity": 1,
+        "unit_price_cents": 7000,
+        "discount_cents": 0,
+        "net_merchandise_cents": 7000,
+        "currency": "USD"
+      },
+      {
+        "order_item_id": "fixture_i5",
+        "order_id": "fixture_o4",
+        "product_id": "fixture_product",
+        "quantity": 1,
+        "unit_price_cents": 8000,
+        "discount_cents": 0,
+        "net_merchandise_cents": 8000,
+        "currency": "USD"
+      }
+    ],
+    "refunds": [
+      {
+        "refund_id": "fixture_r1",
+        "order_id": "fixture_o1",
+        "order_item_id": "fixture_i1",
+        "refunded_at": "2026-01-02T13:00:00Z",
+        "ingested_at": "2026-01-02T13:05:00Z",
+        "merchandise_refund_cents": 1000,
+        "tax_refund_cents": 0,
+        "shipping_refund_cents": 0,
+        "currency": "USD"
+      },
+      {
+        "refund_id": "fixture_r2",
+        "order_id": "fixture_o1",
+        "order_item_id": "fixture_i1",
+        "refunded_at": "2026-01-03T13:00:00Z",
+        "ingested_at": "2026-01-03T13:05:00Z",
+        "merchandise_refund_cents": 500,
+        "tax_refund_cents": 0,
+        "shipping_refund_cents": 0,
+        "currency": "USD"
+      },
+      {
+        "refund_id": "fixture_r3",
+        "order_id": "fixture_o1",
+        "order_item_id": "fixture_i2",
+        "refunded_at": "2026-01-02T13:00:00Z",
+        "ingested_at": "2026-01-02T13:05:00Z",
+        "merchandise_refund_cents": 500,
+        "tax_refund_cents": 0,
+        "shipping_refund_cents": 0,
+        "currency": "USD"
+      },
+      {
+        "refund_id": "fixture_r4",
+        "order_id": "fixture_o3",
+        "order_item_id": "fixture_i4",
+        "refunded_at": "2026-01-05T13:00:00Z",
+        "ingested_at": "2026-01-05T13:05:00Z",
+        "merchandise_refund_cents": 500,
+        "tax_refund_cents": 0,
+        "shipping_refund_cents": 0,
+        "currency": "USD"
+      }
+    ],
+    "ad_spend_daily": [
+      {
+        "campaign_id": "fixture_a",
+        "spend_date": "2026-01-01",
+        "spend_cents": 1000,
+        "currency": "USD"
+      },
+      {
+        "campaign_id": "fixture_a",
+        "spend_date": "2026-01-02",
+        "spend_cents": 2000,
+        "currency": "USD"
+      },
+      {
+        "campaign_id": "fixture_a",
+        "spend_date": "2026-01-03",
+        "spend_cents": 0,
+        "currency": "USD"
+      },
+      {
+        "campaign_id": "fixture_b",
+        "spend_date": "2026-01-01",
+        "spend_cents": 500,
+        "currency": "USD"
+      }
+    ]
+  }
+}

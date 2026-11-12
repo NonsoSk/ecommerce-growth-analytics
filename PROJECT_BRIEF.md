@@ -17,16 +17,16 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 
 1. **Local foundation:** folders, documentation, isolated Python, safety rules and verification. Completed and uploaded to private GitHub; the remote was empty, so no merge was needed.
 2. **Measurement plan and synthetic data (user-facing Milestone 1):** implemented definitions, linked schemas, deterministic 90-day baseline, separate quality fixtures and automated checks. See docs/MEASUREMENT_PLAN.md and docs/SIMULATION_ASSUMPTIONS.md. No business analysis or live integration is implied.
-3. **Source connections:** authorize each account separately; document permissions, extraction method, freshness and limitations. No paid service activation without approval.
-4. **Quality and reconciliation:** test uniqueness, completeness, joins and totals; quantify matched and unmatched records; explain residual differences before interpreting performance.
+3. **Local SQL analysis (user-facing Milestone 2):** implemented SQLite schemas, same-session funnels, daily financials, campaign acquisition, purchase-event reconciliation, visit classification, independent fixtures and a reviewed synthetic report. Real-data and causal conclusions are out of scope.
+4. **Source connections and real-data quality:** planned; authorize each account separately, document permissions/extraction/freshness and repeat reconciliation against real source totals. No paid service activation without approval.
 5. **Analysis and visualization:** build reproducible funnel and acquisition analyses and a Tableau dashboard with definitions and traceable evidence.
 6. **Experiment recommendations:** rank hypotheses using evidence, expected impact, confidence and effort. Specify primary metric, guardrails, eligibility and test design; do not claim causal lift without a suitable experiment.
 7. **Portfolio release:** reproduce outputs, validate AI contributions, review privacy and document limitations before publishing sanitized artifacts.
 
 ## Scope and constraints
 
-The current milestone includes local synthetic generation and validation, not real data collection, business analysis, external account configuration, dashboards or experiments. Revenue definitions address refunds, cancellations, tax, shipping, discounts and currencies. Ad-platform attributed conversions can overlap and must not be added as unique orders. Attribution is not proof of incremental impact.
+The current milestone includes local synthetic generation, SQLite analysis and validation, not real data collection, real business conclusions, external account configuration, dashboards or experiments. Revenue definitions address refunds, cancellations, tax, shipping, discounts and currencies. Ad-platform attributed conversions can overlap and must not be added as unique orders. Attribution is not proof of incremental impact.
 
 ## Planned deliverables
 
-A measurement plan, data dictionary, synthetic quality checks and milestone validation record are now implemented. Real source mapping, purchase and revenue analysis, funnel and acquisition analysis, dashboard and prioritized experiment backlog remain planned.
+A measurement plan, data dictionary, synthetic quality checks, SQLite purchase/revenue reconciliation, funnel/acquisition analysis and reviewed synthetic report are implemented. Real source mapping and analysis, cloud warehouse, dashboard and prioritized experiment backlog remain planned.
