@@ -26,7 +26,7 @@ class FakeBQ:
     def __init__(self,config,output,plan,populated=True):
         self.config,self.output,self.plan=config,Path(output),plan
         self.calls=[]
-        self.tables={name:{'type':'TABLE','labels':{OWNER_KEY:OWNER_VALUE},'numRows':str(item['rows'])}
+        self.tables={name:{'type':'TABLE','labels':{OWNER_KEY:OWNER_VALUE},'numRows':str(item['rows']),'etag':'mock-version-1'}
                      for name,item in plan['tables'].items()} if populated else {}
         self.sql_lookup={render_sql(config,group,name):(group,name) for group in GROUPS for name in BQ_QUERIES}
     def __call__(self,args):
@@ -45,6 +45,7 @@ class FakeBQ:
             name=args[-3].split('.')[-1]
             assert '--replace=true' in args
             self.tables[name]['numRows']=str(len(Path(args[-2]).read_text().splitlines()))
+            self.tables[name]['etag']='mock-version-loaded'
             return '{}'
         if 'query' in args:
             if '--dry_run=true' in args: return 'Mock validation only'
@@ -150,7 +151,7 @@ class BigQueryPreparationTests(unittest.TestCase):
         compare_rows('quality',[{'event_id':'e','occurred_at':'2026-01-01T00:00:00Z'}],
                      [{'event_id':'e','occurred_at':'2026-01-01 00:00:00 UTC'}])
 
-    def test_mock_load_twice_replaces_only_allowlisted_tables(self):
+    def test_mock_load_twice_skips_unchanged_allowlisted_tables(self):
         fake=FakeBQ(self.config,self.out,self.plan,populated=False)
         cloud_run('load',self.config,self.base,self.out,True,runner=fake)
         first=deepcopy(fake.tables)
@@ -158,8 +159,15 @@ class BigQueryPreparationTests(unittest.TestCase):
         self.assertEqual(first,fake.tables)
         self.assertEqual(set(fake.tables),set(self.plan['tables']))
         self.assertEqual(sum('mk' in args for args in fake.calls),40)
-        self.assertEqual(sum('load' in args for args in fake.calls),80)
+        self.assertEqual(sum('load' in args for args in fake.calls),40)
         self.assertFalse(any('rm' in args or '--dataset' in args for args in fake.calls))
+
+
+    def test_nonempty_table_without_matching_receipt_is_not_replaced(self):
+        fake=FakeBQ(self.config,self.out,self.plan)
+        with self.assertRaisesRegex(ValueError,'Refusing automatic replacement'):
+            cloud_run('load',self.config,self.base,self.out,True,runner=fake)
+        self.assertFalse(any('load' in args for args in fake.calls))
 
     def test_mock_dry_run_never_loads_or_executes_queries(self):
         fake=FakeBQ(self.config,self.out,self.plan)
@@ -176,6 +184,38 @@ class BigQueryPreparationTests(unittest.TestCase):
         self.assertEqual(len(queries),16*len(BQ_QUERIES))
         for i in range(0,len(queries),2):
             self.assertIn('--dry_run=true',queries[i]);self.assertIn('--dry_run=false',queries[i+1])
+
+    def test_parallel_comparisons_and_failure_status(self):
+        fake=FakeBQ(self.config,self.out,self.plan)
+        status=cloud_run('execute',self.config,self.base,self.out,True,runner=fake,workers=4)
+        self.assertEqual(len(set(status['completed'])),96)
+        def failing(args):
+            if 'query' in args: raise RuntimeError('simulated server failure')
+            return fake(args)
+        with self.assertRaises(RuntimeError):
+            cloud_run('execute',self.config,self.base,self.out,True,runner=failing,workers=4)
+        status=json.loads((self.out/'execute_status.json').read_text())
+        self.assertEqual(status['status'],'failed_not_verified')
+        self.assertIn('failed_comparison',status)
+        with self.assertRaises(ValueError):
+            cloud_run('execute',self.config,self.base,self.out,True,runner=fake,workers=5)
+
+    def test_load_receipt_requires_matching_source_schema_and_remote_version(self):
+        for changed in ('sha256','schema_sha256','etag'):
+            with self.subTest(changed=changed), tempfile.TemporaryDirectory() as directory:
+                out=Path(directory)
+                plan=prepare(self.config,self.base,out)
+                fake=FakeBQ(self.config,out,plan)
+                receipts={}
+                for name,item in plan['tables'].items():
+                    target=f"{self.config['project_id']}:{self.config['dataset_id']}.{name}"
+                    receipts[target]={'sha256':item['sha256'],'schema_sha256':plan['schemas'][item['table']],
+                                      'etag':'mock-version-1'}
+                    receipts[target][changed]='changed'
+                (out/'load_receipts.json').write_text(json.dumps(receipts))
+                with self.assertRaisesRegex(ValueError,'Refusing automatic replacement'):
+                    cloud_run('load',self.config,self.base,out,True,runner=fake)
+                self.assertFalse(any('load' in args for args in fake.calls))
 
     def test_sqlite_expectations_include_hand_arithmetic_and_late_reprocessing(self):
         def expected(s):return json.loads((self.out/'expected'/f'{s}.json').read_text())

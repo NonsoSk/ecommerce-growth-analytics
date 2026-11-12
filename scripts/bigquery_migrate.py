@@ -14,6 +14,7 @@ def main():
     parser.add_argument('mode',choices=('prepare','load','dry-run','execute'),nargs='?',default='prepare')
     parser.add_argument('--config',type=Path,default=ROOT/'bigquery/config.example.json')
     parser.add_argument('--acknowledge-cloud-actions',action='store_true')
+    parser.add_argument('--workers',type=int,choices=range(1,5),default=1,help='Concurrent read-only comparisons (1–4); loads remain sequential')
     args=parser.parse_args()
     config=json.loads(args.config.read_text())
     baseline=ROOT/'data/generated/baseline'; output=ROOT/'data/generated/bigquery'
@@ -22,7 +23,7 @@ def main():
         print(json.dumps({'status':plan['status'],'owned_tables':len(plan['tables']),
                           'scenarios':len(plan['scenarios']),'cloud_requests':0},indent=2))
     else:
-        result=cloud_run(args.mode,config,baseline,output,args.acknowledge_cloud_actions)
+        result=cloud_run(args.mode,config,baseline,output,args.acknowledge_cloud_actions,workers=args.workers)
         print(json.dumps({'status':result['status'],'completed':len(result['completed'])},indent=2))
 
 

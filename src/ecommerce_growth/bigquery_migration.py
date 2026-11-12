@@ -2,6 +2,7 @@
 
 No credential loading/token printing, dataset creation, billing changes or broad deletes.
 """
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from copy import deepcopy
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -242,8 +243,9 @@ def metadata_guard(config,dataset,tables):
             raise ValueError('Refusing replacement of a customer-managed-key table without an encryption migration plan')
 
 
-def cloud_run(mode,config,baseline,output,acknowledge=False,runner=call_bq):
+def cloud_run(mode,config,baseline,output,acknowledge=False,runner=call_bq,workers=1):
     """Explicit load / dry-run / execute stages; no dataset creation or deletion commands."""
+    if type(workers) is not int or not 1<=workers<=4: raise ValueError('Use 1 to 4 query workers')
     if mode not in ('load','dry-run','execute'): raise ValueError('Unknown cloud mode')
     config_check(config,cloud=True)
     if mode in ('load','execute') and not acknowledge: raise ValueError('Explicit --acknowledge-cloud-actions required')
@@ -256,14 +258,35 @@ def cloud_run(mode,config,baseline,output,acknowledge=False,runner=call_bq):
     status_path.write_text(serialize(status))
     base=bq_base(config); dataset_ref=f"{config['project_id']}:{config['dataset_id']}"
     dataset=json.loads(runner(base+['show',dataset_ref]))
-    listed=json.loads(runner(base+['ls','--max_results=10000',dataset_ref]))
+    listed=json.loads(runner(base+['ls','--max_results=10000',dataset_ref]) or '[]')
     if len(listed)>=10000: raise ValueError('Dataset inventory may be truncated; use a dedicated small dataset')
     existing={r['tableReference']['tableId'] for r in listed}
     metadata={name:json.loads(runner(base+['show',dataset_ref+'.'+name])) for name in plan['tables'] if name in existing}
     metadata_guard(config,dataset,metadata)
+    # Only noncredential metadata is persisted; ACLs and raw CLI diagnostics are omitted.
+    fields=('type','labels','numRows','numBytes','creationTime','expirationTime','etag')
+    snapshot={'dataset':{k:dataset.get(k) for k in ('location','labels','defaultTableExpirationMs')},
+              'tables':{name:{k:meta.get(k) for k in fields} for name,meta in metadata.items()}}
+    (output/'cloud_metadata.json').write_text(serialize(snapshot))
     if mode=='load':
+        receipt_path=output/'load_receipts.json'
+        receipts=json.loads(receipt_path.read_text()) if receipt_path.exists() else {}
+        status['skipped_unchanged']=[]
         for name,item in plan['tables'].items():
             target=dataset_ref+'.'+name; schema=str(output/'schemas'/f"{item['table']}.json")
+            receipt_key=target
+            source={'sha256':item['sha256'],'schema_sha256':plan['schemas'][item['table']]}
+            if name in existing:
+                remote=metadata[name]
+                receipt=receipts.get(receipt_key,{})
+                if (remote.get('etag') and receipt=={**source,'etag':remote['etag']}
+                        and int(remote['numRows'])==item['rows']):
+                    status['skipped_unchanged'].append(name)
+                    status['completed'].append(name)
+                    status_path.write_text(serialize(status))
+                    continue
+                if int(remote['numRows'])!=0:
+                    raise ValueError('Refusing automatic replacement of a nonempty table without a matching input/schema/remote-version receipt')
             if name not in existing:
                 runner(base+['mk','--table',f'--label={OWNER_KEY}:{OWNER_VALUE}',
                              '--expiration='+str(config['table_expiration_seconds']),target,schema])
@@ -273,25 +296,43 @@ def cloud_run(mode,config,baseline,output,acknowledge=False,runner=call_bq):
             loaded=json.loads(runner(base+['show',target]))
             metadata_guard(config,dataset,{name:loaded})
             if int(loaded['numRows'])!=item['rows']: raise ValueError('Loaded row count mismatch')
+            if not loaded.get('etag'): raise ValueError('Missing remote version for load receipt')
+            receipts[receipt_key]={**source,'etag':loaded['etag']}
+            receipt_path.write_text(serialize(receipts))
             status['completed'].append(name)
+            status_path.write_text(serialize(status))
         status['status']='loaded_only_parity_not_verified'
     else:
         if set(plan['tables'])-existing: raise ValueError('Required demonstration tables missing; cloud dry runs do not load data')
-        for scenario,item in plan['scenarios'].items():
+        def check_query(scenario,item,name):
             expected=json.loads((output/'expected'/f'{scenario}.json').read_text())
-            for name in BQ_QUERIES:
-                sql=(output/'sql'/item['group']/f'{name}.sql').read_text()
-                # Every actual job is preceded by a server dry run with the same cap/parameters.
-                estimate=estimated_bytes(runner(query_command(config,item,sql,True,len(expected[name]))))
-                status['dry_run_estimates'][scenario+'/'+name]=estimate
-                if estimate is not None and estimate>config['maximum_bytes_billed']:
-                    raise ValueError('Dry-run estimate exceeds configured bytes cap')
-                if mode=='execute':
-                    actual=json.loads(runner(query_command(config,item,sql,False,len(expected[name]))))
-                    compare_rows(name,expected[name],actual)
-                    path=output/'actual'/scenario/f'{name}.json';path.parent.mkdir(parents=True,exist_ok=True)
-                    path.write_text(serialize(actual))
-                status['completed'].append(scenario+'/'+name)
+            sql=(output/'sql'/item['group']/f'{name}.sql').read_text()
+            estimate=estimated_bytes(runner(query_command(config,item,sql,True,len(expected[name]))))
+            if estimate is not None and estimate>config['maximum_bytes_billed']:
+                raise ValueError('Dry-run estimate exceeds configured bytes cap')
+            if mode=='execute':
+                actual=json.loads(runner(query_command(config,item,sql,False,len(expected[name]))))
+                compare_rows(name,expected[name],actual)
+                path=output/'actual'/scenario/f'{name}.json';path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_text(serialize(actual))
+            return scenario+'/'+name,estimate
+        tasks=[(scenario,item,name) for scenario,item in plan['scenarios'].items() for name in BQ_QUERIES]
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futures={pool.submit(check_query,*task):task for task in tasks}
+            for future in as_completed(futures):
+                try:
+                    key,estimate=future.result()
+                except Exception:
+                    for pending in futures: pending.cancel()
+                    scenario,_,name=futures[future]
+                    status['status']='failed_not_verified'
+                    status['failed_comparison']=scenario+'/'+name
+                    status_path.write_text(serialize(status))
+                    raise
+                status['dry_run_estimates'][key]=estimate
+                status['completed'].append(key)
+                status_path.write_text(serialize(status))
+        status['completed'].sort()
         status['status']='google_dry_runs_passed_execution_unverified' if mode=='dry-run' else 'live_bigquery_parity_passed'
     status_path.write_text(serialize(status))
     (output/'verification_status.json').write_text(serialize(status))

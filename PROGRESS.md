@@ -152,3 +152,40 @@ Limitations: no landing pages, true lifetime customer history, complete financia
 Supply the intended Google account/principal, actual Google Cloud project ID, approved dedicated dataset (proposed `ecommerce_growth_demo`) and exact dataset location. Install/authenticate the Google Cloud CLI locally. The execution principal needs BigQuery Job User on the job project and BigQuery Data Editor only on the dedicated dataset; an administrator must prepare/approve the dataset and ownership label. Confirm API/billing or sandbox constraints and the query-byte ceiling before separately authorizing a live run. Detailed commands, labels and permissions are in `docs/BIGQUERY_MIGRATION.md`.
 
 Local reproduction: `.venv/bin/python scripts/run_analysis.py` then `.venv/bin/python scripts/bigquery_migrate.py prepare`. This milestone stops at preparation while cloud access is unavailable.
+
+## 2026-11-13 — Milestone 3: live BigQuery sandbox migration verified
+
+**Current status: in development. Synthetic cloud execution and all 96 parity comparisons passed. Earlier preparation-only statuses above are historical.**
+
+### Access and scope
+
+- Installed and verified the official Apple-silicon CLI outside the repository: gcloud 593.0.0 / bq 2.1.42. Project Python remains 3.14.8 with no new dependencies. User completed browser authentication; no tokens or credentials were printed or committed.
+- Verified project `premium-silicon-514522-e8`, BigQuery API availability, and disabled billing/no linked account before loading and after execution. No trial, billing activation or IAM change was made.
+- Created only the authorized `ecommerce_growth_demo` dataset in `US`, with `portfolio_project=ecommerce_growth_analytics` and seven-day default table expiration. Verified ownership on all 40 demonstration tables; no unrelated dataset was modified.
+
+### Loads, validation and discrepancies
+
+- Preflight upload: 2,312,867 NDJSON bytes, including 2,287,858 baseline bytes and 25,009 bytes of separate hand/quality fixtures. Forty explicit-schema batch loads completed once; baseline and fixture prefixes remain separate. BigQuery reports 735,612 logical bytes.
+- Baseline: 12,563 rows; fixtures: 132 rows; total: 12,695. Eight baseline row counts match the manifest, with zero duplicate primary keys or duplicate order transaction IDs. Intentional duplicate purchase deliveries remain isolated in the fixture.
+- Sanitized job metadata confirms exactly 40 load jobs and 180 successful query jobs across the interrupted attempt, isolated diagnostic and full rerun, with zero server-reported errors and 7,622,344 query bytes processed. No repeat load was submitted.
+- All 96 distinct comparisons passed in a complete two-worker run, each preceded by a successful dry run with a 1,000,000,000-byte per-query ceiling. Counts and integer money agree exactly; nulls, result keys and floating ratios meet the measurement/parity contract.
+- Seven source-to-output monetary/count reconciliation differences are zero. Baseline: 2,700 sessions, 377 converting sessions, 377 orders, $345,007.20 merchandise before refunds, $14,084.25 merchandise refunds, $330,922.95 net merchandise revenue and $44,259.88 media spend. Ordered funnel: 2,700 → 2,380 → 1,036 → 677 → 377.
+- Hand-calculated cases, multiple orders/items/refunds, zero-conversion spend days, missing attribution, invalid funnel ordering, duplicate deliveries, missing IDs and late-event reprocessing all matched SQLite. The hand fixture correctly counts four orders across three converting sessions.
+- The first four-worker attempt stopped after 81 passes due to a CLI error on `late_arrival/quality`. Available server job metadata showed no job failures; the isolated query and entire lower-concurrency rerun passed. Precise cause is unresolved. The interrupted status is retained locally; no expected values, SQL definitions or simulated data were changed to force agreement.
+- Local suite: **45 tests passed**. Added receipt/remote-version guards to skip unchanged uploads and refuse automatic replacement of unverifiable nonempty tables; added bounded read-only concurrency and partial failure progress. No append loading or duplicate table copies were used.
+- Seed 42 and original baseline fingerprint remain unchanged: `e486a1983c44d36bc6b57eddda6849feff49092ae3acea3b39d319e366f2e5da`. Detailed plan/result digests, row counts, quality audit and campaign tables are in `docs/BIGQUERY_VALIDATION.md`. Generated data, result files, metadata, load receipts and filled configuration remain ignored.
+
+### Retention and limitations
+
+Observed table expiration is 2026-11-19, between 22:43:31 and 22:49:50 UTC. Local sources and committed evidence outlive these temporary tables. The current sandbox's lifetime storage allowance is not restored by deletion; unchanged verified uploads are skipped. Query retries still consume compute allowance. Empty-file loads, remaining historical quota and production-scale behavior were not established. The bundled bq dependency warning did not prevent successful execution.
+
+This validates a synthetic analytical method, not real business performance or causal impact. GA4, Shopify, Google Ads, Meta Ads, Hotjar and Tableau remain disconnected/not implemented. Next proposed milestone: a separately authorized dashboard built from validated outputs, with the measurement definitions and simulation caveats visible; independent real-data analysis remains a separate evidence requirement.
+
+Reproduce (authenticated CLI on PATH, ignored local config present, demo tables not expired):
+
+```sh
+.venv/bin/python scripts/bigquery_migrate.py execute --config bigquery/config.local.json --acknowledge-cloud-actions --workers 2
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+For first loads or expired tables, follow the guarded load workflow and sandbox preflight in `docs/BIGQUERY_MIGRATION.md`; do not enable billing or extend retention automatically. Repository privacy and remote history were checked before this update; the branch had no remote divergence. Reviewed 11 changed files and scanned all 79 tracked files: zero targeted secret-pattern matches, zero tracked ignored/private/generated files, and no credential or local configuration files staged. Whitespace checks passed. The authorized commit/push is followed by a local-versus-remote hash check; the final hash is reported after upload rather than embedded in its own commit.

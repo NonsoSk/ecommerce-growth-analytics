@@ -1,6 +1,6 @@
-# BigQuery migration preparation
+# BigQuery migration
 
-**Prepared locally; live execution and parity unverified.** Read [the migration guide](../docs/BIGQUERY_MIGRATION.md) before any cloud operation.
+**Live synthetic execution verified: 96/96 BigQuery-versus-SQLite comparisons passed.** See [validation evidence](../docs/BIGQUERY_VALIDATION.md). Read [the migration guide](../docs/BIGQUERY_MIGRATION.md) before any cloud operation.
 
 - `schemas/`: eight explicit raw schemas; no automatic field inference.
 - `sql/models.sql`: typed GoogleSQL model CTEs, preserving the validated measurement rules.

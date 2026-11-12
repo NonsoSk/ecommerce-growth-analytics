@@ -1,11 +1,11 @@
 # Integration plan
 
-**All analytics integrations are planned and disconnected.** No analytics credentials have been supplied, analytics accounts configured or paid services activated. GitHub repository access is verified separately below.
+**BigQuery synthetic demonstration verified; real source integrations remain planned and disconnected.** The authenticated BigQuery sandbox run passed 96/96 SQLite comparisons. Billing is disabled; no paid service or trial was activated. See [validation evidence](BIGQUERY_VALIDATION.md). GitHub repository access is verified separately below.
 
 | Tool | Intended role | Validation before use |
 | --- | --- | --- |
 | Python / SQL | Local analysis and transformations | Reproduce results with fixtures and checks |
-| BigQuery | Warehouse | Approve project, region, access and cost controls before setup |
+| BigQuery | Verified synthetic demo warehouse | US demo dataset, owned tables, 96/96 parity; seven-day expiration and billing disabled. Real-data/production operation remains planned |
 | GA4 | Events and journey steps | Event definitions, consent gaps, transaction IDs, export coverage |
 | Shopify | Orders and revenue reference | Order lifecycle, refunds, tax, shipping, discounts, time zone |
 | Google Ads | Spend and attributed conversions | Account currency, dates, attribution window and conversion actions |
