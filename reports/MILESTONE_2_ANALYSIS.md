@@ -35,7 +35,7 @@ Generated CSVs and SQLite database are under `data/generated/analysis/`. Blank r
 | Observed paid-media CAC proxy | $245.89 |
 | Sessions with immature refund windows | 0 |
 
-Orders are counted independently of purchase-event delivery. The strict funnel below requires a valid linked purchase event. Their totals agree in the clean baseline; missing tracking would create a visible discrepancy, not erase ledger revenue.
+Purchase conversion counts distinct sessions with at least one valid order, not order rows; a session with multiple orders contributes once to conversion and all of its orders to order count. Orders are counted independently of purchase-event delivery. The strict funnel below requires a valid linked purchase event. Their totals agree in the clean baseline; missing tracking would create a visible discrepancy, not erase ledger revenue.
 
 ## Ordered, same-session funnel
 
@@ -63,7 +63,7 @@ Landing page is absent from the source schema. No landing-page analysis or inven
 
 ## Campaign totals — same-session attribution
 
-| Campaign | Spend | Orders | Net revenue | First observed buyers | Net ROAS | CAC proxy | Paid days / no orders |
+| Campaign | Spend | Orders | Net revenue | First observed buyers | Net ROAS | CAC proxy | Days with spend and zero attributed orders |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | syn_google_prospecting | $11,356.56 | 49 | $42,447.72 | 42 | 3.74x | $270.39 | 48 |
 | syn_google_retargeting | $11,670.38 | 56 | $50,380.26 | 54 | 4.32x | $216.12 | 46 |
@@ -79,7 +79,7 @@ These are ratios of summed values, not averages of daily ratios. CAC includes me
 | direct | 533 | 78 | $69,532.62 | 67 |
 | organic | 674 | 96 | $88,205.70 | 84 |
 
-Organic and direct are known unpaid channels, not necessarily tracking failures. Paid CAC/ROAS are not applicable to them. Direct orders stay direct rather than inheriting an earlier paid session.
+Direct is not attributed to a paid campaign under the current same-session model; it may include missing attribution or prior paid exposure. Organic does not imply zero acquisition cost: content, SEO and other costs are absent from this dataset. Paid-campaign CAC/ROAS are not assigned to either category. Direct orders stay direct rather than inheriting an earlier paid session.
 
 ## First observed versus returning visits
 
@@ -92,7 +92,7 @@ Visitors can appear in both rows over time; distinct-visitor counts across these
 
 ## Data quality and reconciliation
 
-Automated suite: **29 tests, 0 failures, 0 errors**. Independent hand-calculated fixtures supplement source-total and baseline checks.
+Automated suite: **42 tests, 0 failures, 0 errors**. Independent hand-calculated fixtures supplement source-total and baseline checks.
 
 | Baseline event disposition | Rows |
 | --- | --- |
@@ -137,4 +137,4 @@ Raw records are retained. Duplicate delivery is quarantined, missing IDs are qua
 
 The full default refund window is mature only under the invented maximum 14-day delay plus ingestion allowance. Earlier cutoffs are provisional; unfinished sessions are excluded, future event arrivals are deferred, and refunds are included only when available. Orders/spend are static snapshots without ingestion timestamps, so this is not a historical warehouse backtest. Failed payments, cancellations, full returns, true lifetime customer history, landing pages, real consent loss and production-scale validation remain absent.
 
-BigQuery remains the planned cloud warehouse. No BigQuery, GA4, Shopify, Google Ads, Meta Ads, Hotjar or Tableau integration is implemented. No dashboard, A/B experiment or paid service was activated. See docs/SQL_PIPELINE.md for migration considerations and docs/MEASUREMENT_REVIEW.md for definition corrections.
+BigQuery migration files are prepared, but cloud execution and result parity are not yet verified. No BigQuery, GA4, Shopify, Google Ads, Meta Ads, Hotjar or Tableau integration is claimed. No dashboard, A/B experiment or paid service was activated. See docs/BIGQUERY_MIGRATION.md for migration status, docs/MEASUREMENT_REVIEW.md for definition corrections and docs/FOLLOW_UP_BACKLOG.md for the investigation backlog.

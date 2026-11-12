@@ -1,6 +1,6 @@
 # E-commerce Growth Analytics
 
-**Status: in development — reproducible local SQLite analysis of synthetic data implemented.**
+**Status: in development — SQLite analysis verified; BigQuery migration prepared locally, cloud execution unverified.**
 
 A portfolio project for a fictional direct-to-consumer mattress retailer. The goal is to analyze acquisition spend and customer journeys, identify conversion problems, reconcile purchases and revenue, and recommend prioritized experiments.
 
@@ -52,9 +52,21 @@ Run the complete local pipeline, including all tests:
 
 The pipeline verifies existing baseline hashes (or generates the default baseline if absent), loads an explicit SQLite schema, runs separate SQL analyses, exports dashboard-ready CSVs and renders a report. Outputs stay ignored under `data/generated/analysis/`. Reruns replace validated outputs rather than append rows; raw baseline files remain unchanged. No additional dependency or external service is required.
 
-Read the reviewed [synthetic analysis report](reports/MILESTONE_2_ANALYSIS.md), [measurement review](docs/MEASUREMENT_REVIEW.md) and [SQL pipeline guide](docs/SQL_PIPELINE.md). The default seed-42 run has 1,496 observed visitors, 331 purchasing visitors, 377 orders across 377 converting sessions, 13.96% order conversion and $330,922.95 net merchandise revenue. These are computed simulation outputs, not measured retailer performance. All 29 tests pass; spend and revenue reconcile with zero differences.
+Read the reviewed [synthetic analysis report](reports/MILESTONE_2_ANALYSIS.md), [measurement review](docs/MEASUREMENT_REVIEW.md) and [SQL pipeline guide](docs/SQL_PIPELINE.md). The default seed-42 run has 1,496 observed visitors, 331 purchasing visitors, 377 orders across 377 converting sessions, 13.96% order conversion and $330,922.95 net merchandise revenue. These are computed simulation outputs, not measured retailer performance. The expanded local suite has 42 passing tests; spend and revenue reconcile with zero differences. Migration workflow mocks are local tests, not proof of BigQuery execution.
 
-The SQL distinguishes ledger orders from tracked funnel purchases, first observed from lifetime-new purchasers, and original merchandise revenue from refund-adjusted revenue. Same-session attribution is descriptive, not causal. Landing-page analysis is unavailable because that field does not exist. Earlier cutoffs (`--cutoff YYYY-MM-DD`) flag incomplete refund observation and defer unavailable events. BigQuery remains a planned cloud migration; no cloud warehouse or dashboard has been implemented.
+The SQL distinguishes ledger orders from tracked funnel purchases, first observed from lifetime-new purchasers, and original merchandise revenue from refund-adjusted revenue. Conversion counts distinct buying sessions even when a session has multiple orders. Same-session attribution is descriptive, not causal: direct has no paid campaign assignment and can include missing attribution or prior paid exposure; organic does not imply zero acquisition cost. Landing-page analysis is unavailable because that field does not exist. Earlier cutoffs (`--cutoff YYYY-MM-DD`) flag incomplete refund observation and defer unavailable events. No live cloud warehouse or dashboard has been implemented.
+
+## Milestone 3: BigQuery migration preparation
+
+Prepare the upload files, GoogleSQL and SQLite parity expectations locally:
+
+```sh
+.venv/bin/python scripts/bigquery_migrate.py prepare
+```
+
+This makes **zero cloud requests**. Eight explicit schemas, typed GoogleSQL models and 12 output/control queries are prepared for eight parity scenarios. Generated files remain ignored. The future driver restricts replacements to 40 explicitly named, ownership-labelled demonstration tables, supports server dry runs and applies a configurable maximum-bytes-billed limit to every query job.
+
+**Not yet verified:** Google authentication/project access, server SQL validation, loading, execution and actual BigQuery/SQLite result parity. `gcloud` and `bq` are not installed here; no billing or cloud resources were activated. See the [migration guide](docs/BIGQUERY_MIGRATION.md) for exact setup, permissions, location, cost-control limitations and future execution commands. The [follow-up backlog](docs/FOLLOW_UP_BACKLOG.md) keeps attribution/device investigations, landing-page measurement and independent real-data evidence separate from simulation validation. Tableau remains out of scope.
 
 ## Project layout
 
@@ -62,6 +74,7 @@ The SQL distinguishes ledger orders from tracked funnel purchases, first observe
 | --- | --- |
 | `src/ecommerce_growth/` | Reusable Python analysis code |
 | `sql/` | Explicit SQLite schema, analytical views and separate report queries |
+| `bigquery/` | Explicit schemas, GoogleSQL and placeholder migration configuration; locally prepared only |
 | `notebooks/` | Exploration with reviewed, sanitized outputs |
 | `tests/` | Generator checks, SQL regression tests and independent hand-calculated fixtures |
 | `scripts/` | Local verification, generation and complete SQL pipeline commands |

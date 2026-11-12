@@ -33,7 +33,7 @@ The database is a copied snapshot of raw JSON, not a transformed replacement for
 | funnel_exceptions.csv | One affected session, with missing/nonchronological predecessor reason and eligible step times |
 | campaign_daily.csv | Union of spend/outcome campaign-day keys; same-session attributed outcomes and null reasons |
 | campaign_summary.csv | Campaign totals; ratios recomputed from summed values, suppressed if spend coverage is incomplete |
-| unattributed.csv | Known unpaid channel; activity not assigned to a paid campaign |
+| unattributed.csv | Channel not assigned to a paid campaign under the current attribution model |
 | reconciliation.csv | One order-side record plus one record per excluded purchase-event delivery; record_type distinguishes grains |
 | visitors.csv | First-observed/returning visit type; visitors can appear in both groups |
 | quality.csv | One raw event; accepted, deferred or quarantined, reason plus independent late-arrival flag |
@@ -42,7 +42,7 @@ The database is a copied snapshot of raw JSON, not a transformed replacement for
 | run_metadata.json | Seed, size, dates, versions, table hashes, canonical data fingerprint, SQL hashes, test result and summary |
 | MILESTONE_2_ANALYSIS.md | Recomputed report; reviewed default copy is committed under reports/ |
 
-CSV money columns remain integer cents; ratio/mean columns are floating-point display calculations. Blank fields mean SQL null. Zero denominators use `NULLIF`; daily/campaign outputs include explicit reasons, while funnel denominator columns identify empty stages. CAC/ROAS are not applicable to unpaid channels. Do not average ratios across dates or sum distinct visitors across overlapping visit-type groups.
+CSV money columns remain integer cents; ratio/mean columns are floating-point display calculations. Blank fields mean SQL null. Zero denominators use `NULLIF`; daily/campaign outputs include explicit reasons, while funnel denominator columns identify empty stages. Paid-campaign CAC/ROAS are not assigned to direct/organic; direct may hide attribution or prior paid exposure, and organic acquisition can have unmeasured costs. Do not average ratios across dates or sum distinct visitors across overlapping visit-type groups.
 
 The audit covers the full raw event snapshot; reporting views restrict to complete cohort sessions. Deferred includes future events outside the as-of view. Audit statuses do not silently delete events. Duplicate purchase deliveries are ranked by ingestion time then event ID **after structural/order-link checks**; an invalid earlier record cannot suppress a valid later one. Missing IDs, unmatched orders, mismatched sessions/times and invalid event chronology are quarantined. Late valid events are included once available and assigned to occurrence/session cohort, never ingestion day.
 
@@ -54,7 +54,9 @@ One Google session has two orders with 18,000 net cents after refunds, but one c
 
 The original event-quality fixtures are loaded unchanged into **separate** databases using this fixture's matching `fixture_session`/`fixture_tx` context. This demonstrates duplicate, missing-ID and late-arrival handling through the same SQL audit used by baseline. These cases are not appended to the baseline or treated as baseline findings.
 
-## BigQuery migration considerations — planned only
+## BigQuery migration considerations — prepared locally, cloud unverified
+
+Milestone 3 now provides explicit schemas, GoogleSQL and a guarded CLI workflow in `bigquery/`. See [BIGQUERY_MIGRATION.md](BIGQUERY_MIGRATION.md) for prerequisites and actual validation status. No BigQuery execution or parity is claimed.
 
 Preserve the same grains and acceptance fixtures before porting. Map integer cents to INT64, UTC timestamps to TIMESTAMP, day keys to DATE, and ratios to guarded numeric division (for example SAFE_DIVIDE). Replace SQLite date/julianday functions and the recursive calendar with explicit date/timestamp operations and a generated date array or date dimension. Window ordering and same-session rules must stay explicit.
 

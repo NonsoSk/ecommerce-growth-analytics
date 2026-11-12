@@ -118,3 +118,37 @@ These are synthetic outputs, not evidence about Puffy, real customers, causal li
 Run `.venv/bin/python scripts/run_analysis.py` for tests and the complete pipeline. Outputs stay ignored under `data/generated/analysis/`; the reviewed Markdown report is explicitly allowed in Git. See `docs/SQL_PIPELINE.md` for output grains, fixture arithmetic, null semantics and planned BigQuery migration.
 
 Limitations: no landing pages, true lifetime customer history, complete financial ingestion history, cross-session attribution, real source data or production warehouse. BigQuery, Shopify, GA4, advertising platforms, Hotjar and Tableau remain disconnected. No paid service or A/B experiment was activated. Stop after this milestone; no implementation blocker remains. Commit/push and final local/remote verification follow the staged privacy review.
+
+## 2026-11-12 — review corrections and Milestone 3 preparation
+
+**Current status: in development. Review corrections completed; BigQuery migration prepared locally. Live BigQuery validation, execution and parity remain unverified.**
+
+### Review corrections
+
+- Corrected both the report renderer and reviewed report: direct is not assigned to a paid campaign under the current model and may include missing attribution or prior paid exposure. Organic does not imply zero acquisition cost.
+- Renamed the displayed column to **Days with spend and zero attributed orders**.
+- Confirmed conversion uses distinct buying sessions with order counts separate. Added an explicit assertion that two orders in one session yield one converting session and 100%, not 200%, daily conversion.
+- Added a report-regeneration regression check and `docs/FOLLOW_UP_BACKLOG.md` for attribution sensitivity, comparable device/source/visit cohorts, landing-page tracking and independent real-data analysis. Simulation validation remains separate from business evidence.
+
+### Migration preparation
+
+- Checked current official Google Cloud documentation before implementing GoogleSQL/CLI-specific behavior; dated sources and operational caveats are linked in `docs/BIGQUERY_MIGRATION.md`.
+- Added eight explicit raw schemas, native timestamp/date/integer-money CTE models, separate GoogleSQL report queries, summary/raw controls, a placeholder configuration and a standard-library workflow using the future `bq` CLI.
+- Offline preparation creates deterministic ignored NDJSON, SQL, schema and SQLite-expectation artifacts for five isolated table groups, 40 exact demonstration table names and eight scenarios. There are 12 output/control queries per scenario, yielding 96 prepared comparisons.
+- Future cloud stages require actual configuration and dataset ownership/location checks. Replacements are restricted to exact owned table names; no broad deletion, dataset creation, IAM or billing activation is implemented. Existing unlabelled/view/customer-managed-key targets are refused.
+- Every query has a configurable maximum-bytes-billed value; execution is preceded by server dry-run support. New tables have explicit expiration. Per-query controls do not cover all storage, retained data, capacity, transfer or aggregate-run costs; these limits are documented.
+
+### Checks actually run
+
+- **42 local tests passed**: 14 generator, 15 SQLite, 12 offline migration/guard tests and one report-regeneration test. The migration tests use mocks for cloud calls; they do not validate Google's SQL engine or establish actual cloud parity.
+- Repeated offline preparation produced identical artifacts, 40 unique destination names, no duplicate append behavior and unchanged raw baseline hashes. No Google Cloud requests were made by preparation.
+- Local SQLite financial/count reconciliations remain at zero difference. Seed 42 and data fingerprint remain `e486a1983c44d36bc6b57eddda6849feff49092ae3acea3b39d319e366f2e5da`; no simulated values were changed.
+- `gcloud` and `bq` were not found on PATH or checked installation paths. Google Python modules are absent; credential environment setting is unset and the default ADC file is absent. No credential contents or tokens were read or printed. This does not prove that no account/project exists elsewhere.
+- Offline verification status is explicitly **not_verified_in_bigquery**. No server dry-run, cloud load, query execution or live BigQuery/SQLite result comparison has succeeded or been claimed. No billing, paid resources or Tableau dashboards were activated.
+- Staged review covered 78 tracked/staged files: zero secret-pattern matches; no private data, credentials, local configuration, environments, generated bulk files or databases staged. New JSON files are explicit schemas or placeholder configuration. The original generator and data fixtures are unchanged; whitespace checks passed.
+
+### Next input required
+
+Supply the intended Google account/principal, actual Google Cloud project ID, approved dedicated dataset (proposed `ecommerce_growth_demo`) and exact dataset location. Install/authenticate the Google Cloud CLI locally. The execution principal needs BigQuery Job User on the job project and BigQuery Data Editor only on the dedicated dataset; an administrator must prepare/approve the dataset and ownership label. Confirm API/billing or sandbox constraints and the query-byte ceiling before separately authorizing a live run. Detailed commands, labels and permissions are in `docs/BIGQUERY_MIGRATION.md`.
+
+Local reproduction: `.venv/bin/python scripts/run_analysis.py` then `.venv/bin/python scripts/bigquery_migrate.py prepare`. This milestone stops at preparation while cloud access is unavailable.

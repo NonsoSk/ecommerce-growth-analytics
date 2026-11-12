@@ -1,0 +1,7 @@
+{
+  "project_id": "your-project-id",
+  "dataset_id": "ecommerce_growth_demo",
+  "location": "CHOOSE_LOCATION",
+  "maximum_bytes_billed": 1000000000,
+  "table_expiration_seconds": 604800
+}

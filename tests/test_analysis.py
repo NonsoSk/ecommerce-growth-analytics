@@ -1,5 +1,6 @@
 """Hand-calculated SQL expectations, independent of the random generator."""
 from copy import deepcopy
+from contextlib import closing
 import json
 from pathlib import Path
 import sqlite3
@@ -29,6 +30,7 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(len(daily),5)
         self.assertEqual((daily[0]['orders'],daily[0]['converting_sessions'],daily[0]['net_revenue_cents']), (2,1,18000))
         self.assertEqual(daily[0]['aov_cents'],10000)
+        self.assertEqual(daily[0]['order_conversion_rate'],1.0) # 1 buying session / 1, not 2 orders / 1.
         self.assertIsNone(daily[3]['order_conversion_rate'])
         self.assertEqual(daily[3]['sessions'],0)
 
@@ -176,7 +178,7 @@ class AnalysisTests(unittest.TestCase):
             self.assertEqual(first,second)
             self.assertEqual(exported,{p.name:p.read_bytes() for p in output.iterdir() if p.suffix!='.sqlite'})
             self.assertEqual(original,{p.name:p.read_bytes() for p in baseline.iterdir()})
-            with sqlite3.connect(output/'analysis.sqlite') as db:
+            with closing(sqlite3.connect(output/'analysis.sqlite')) as db:
                 self.assertEqual(db.execute('SELECT COUNT(*) FROM sessions').fetchone()[0],137)
             (baseline/'sessions.json').write_text('[]')
             with self.assertRaisesRegex(ValueError,'fingerprint mismatch'):

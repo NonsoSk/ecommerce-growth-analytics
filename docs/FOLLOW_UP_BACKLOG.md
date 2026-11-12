@@ -1,0 +1,12 @@
+# Follow-up backlog — not completed analysis
+
+Simulation validation demonstrates arithmetic and pipeline behavior. It does not establish evidence about Puffy, real customer behavior, causal effects or a successful experiment. The items below are scoped investigations, not findings or authorization to connect accounts.
+
+| Priority | Follow-up | Proposed method and required inputs | Acceptance criteria / limits |
+| --- | --- | --- | --- |
+| 1 | Attribution sensitivity | Compare the current same-session rule with explicitly defined last-nondirect and 7/30-day windows using observed journeys. Keep direct/missing attribution visible; require consent-safe identity and channel definitions. | Reconcile every model to the same order/revenue totals; show reassignment, overlap, unmatched identity and left-censored histories. Differences are attribution sensitivity, not incremental revenue. |
+| 1 | Device comparisons within comparable cohorts | Compare mobile and desktop within the same source and first-observed/returning visit cohort, with sample counts and consistent observation windows. Later inspect actual instrumentation and usability evidence. | Report stratum counts, uncertainty and mix differences. Do not infer a usability problem from generator parameters or observational comparisons. No experiment is implemented. |
+| 2 | Landing-page tracking | Define session landing-page occurrence, stable page category, campaign parameters and consent rules. Review field availability before altering schemas; avoid personal/query-string data. | An agreed measurement specification plus tested capture/joins and missingness report. Current data have no landing page, so no page findings can be produced. |
+| 2 | Independent real-data analysis | Obtain separately authorized, privacy-reviewed extracts; document provenance, permissions, costs and source definitions. Re-run independent source reconciliation and quality checks before analysis. | Actual independent evidence and reviewer sign-off, with limitations. Synthetic tests and BigQuery parity alone do not validate real business conclusions. |
+
+Cloud migration is a separate engineering acceptance gate: execute GoogleSQL and compare actual outputs to SQLite/hand-calculated expectations. Passing it still does not provide business evidence. Tableau dashboards remain out of scope.

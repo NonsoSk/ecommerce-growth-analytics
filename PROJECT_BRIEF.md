@@ -1,6 +1,6 @@
 # Project brief
 
-**In development.** Fictional direct-to-consumer mattress retailer; no analysis results yet.
+**In development.** Fictional direct-to-consumer mattress retailer; local synthetic analysis is verified, with no real business results claimed.
 
 ## Business objective
 
@@ -18,7 +18,7 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 1. **Local foundation:** folders, documentation, isolated Python, safety rules and verification. Completed and uploaded to private GitHub; the remote was empty, so no merge was needed.
 2. **Measurement plan and synthetic data (user-facing Milestone 1):** implemented definitions, linked schemas, deterministic 90-day baseline, separate quality fixtures and automated checks. See docs/MEASUREMENT_PLAN.md and docs/SIMULATION_ASSUMPTIONS.md. No business analysis or live integration is implied.
 3. **Local SQL analysis (user-facing Milestone 2):** implemented SQLite schemas, same-session funnels, daily financials, campaign acquisition, purchase-event reconciliation, visit classification, independent fixtures and a reviewed synthetic report. Real-data and causal conclusions are out of scope.
-4. **Source connections and real-data quality:** planned; authorize each account separately, document permissions/extraction/freshness and repeat reconciliation against real source totals. No paid service activation without approval.
+4. **BigQuery preparation (user-facing Milestone 3) and source connections:** explicit schemas, GoogleSQL, controlled workflow and parity checks are prepared locally; live cloud execution and parity remain unverified. Real sources still require separate authorization, documented permissions/extraction/freshness and independent reconciliation. No paid services were activated.
 5. **Analysis and visualization:** build reproducible funnel and acquisition analyses and a Tableau dashboard with definitions and traceable evidence.
 6. **Experiment recommendations:** rank hypotheses using evidence, expected impact, confidence and effort. Specify primary metric, guardrails, eligibility and test design; do not claim causal lift without a suitable experiment.
 7. **Portfolio release:** reproduce outputs, validate AI contributions, review privacy and document limitations before publishing sanitized artifacts.

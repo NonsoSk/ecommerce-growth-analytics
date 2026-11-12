@@ -1,4 +1,5 @@
--- Organic/direct are known unpaid channels, but not attributable to paid campaigns.
+-- No paid campaign assignment under this model; direct may hide attribution or prior paid exposure.
+-- Organic is not necessarily free: nonmedia acquisition costs are absent.
 SELECT channel,'not_attributed_to_paid_campaign' AS attribution_status,
  COUNT(*) AS sessions,SUM(orders) AS orders,SUM(net_revenue_cents) AS net_revenue_cents,
  SUM(first_observed_purchasers) AS first_observed_purchasers,
