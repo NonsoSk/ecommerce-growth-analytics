@@ -60,3 +60,21 @@ htmlcov/
 .DS_Store
 .idea/
 .vscode/
+
+# Reviewed baseline-only dashboard aggregates; never include quality fixtures here
+!/dashboard/data/overview.csv
+!/dashboard/data/funnel.csv
+!/dashboard/data/acquisition.csv
+/dashboard/data/preview_data.js
+/dashboard/workbooks/
+/dashboard/screenshots/
+# Preserve the user's local Tableau draft without committing workstation metadata
+/dashboard/SYNTHETIC_Growth_DRAFT.twb
+
+# Optional isolated build tooling and preserved exploratory artifacts
+.venv-hyper/
+*.twbr
+/dashboard/preview.html
+/dashboard/preview.css
+/dashboard/preview.js
+/scripts/test_tableau_xml.py

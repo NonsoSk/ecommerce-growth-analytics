@@ -1,16 +1,16 @@
 # Integration plan
 
-**BigQuery synthetic demonstration verified; real source integrations remain planned and disconnected.** The authenticated BigQuery sandbox run passed 96/96 SQLite comparisons. Billing is disabled; no paid service or trial was activated. See [validation evidence](BIGQUERY_VALIDATION.md). GitHub repository access is verified separately below.
+**BigQuery synthetic demonstration verified; real source integrations remain planned and disconnected.** The authenticated BigQuery sandbox run passed 96/96 SQLite comparisons. Billing was disabled at the historical verification; current cloud state has not been rechecked. No paid service or trial was activated. See [validation evidence](BIGQUERY_VALIDATION.md). GitHub repository access is verified separately below.
 
 | Tool | Intended role | Validation before use |
 | --- | --- | --- |
 | Python / SQL | Local analysis and transformations | Reproduce results with fixtures and checks |
-| BigQuery | Verified synthetic demo warehouse | US demo dataset, owned tables, 96/96 parity; seven-day expiration and billing disabled. Real-data/production operation remains planned |
+| BigQuery | Verified synthetic demo warehouse | US demo dataset, owned tables, 96/96 parity; seven-day expiration and billing disabled at the recorded verification. Current availability is unverified. Real-data/production operation remains planned |
 | GA4 | Events and journey steps | Event definitions, consent gaps, transaction IDs, export coverage |
 | Shopify | Orders and revenue reference | Order lifecycle, refunds, tax, shipping, discounts, time zone |
 | Google Ads | Spend and attributed conversions | Account currency, dates, attribution window and conversion actions |
 | Meta Ads | Spend and attributed conversions | Account currency, dates, attribution window and overlap |
-| Tableau | Dashboard | Reconcile displayed totals to validated queries; review sharing |
+| Tableau Public | Implemented local synthetic dashboards using CSV/Hyper extracts | Most rendering/filter cases passed; final acceptance pending. No Tableau cloud publication or BigQuery live connection |
 | Hotjar | Qualitative behavior evidence | Consent, masking, sampling and privacy; no identifiable recordings in Git |
 | AI workflow (provider undecided) | Assist code, exploration and explanation | Independently verify every result and record review |
 

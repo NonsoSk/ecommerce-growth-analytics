@@ -189,3 +189,139 @@ Reproduce (authenticated CLI on PATH, ignored local config present, demo tables 
 ```
 
 For first loads or expired tables, follow the guarded load workflow and sandbox preflight in `docs/BIGQUERY_MIGRATION.md`; do not enable billing or extend retention automatically. Repository privacy and remote history were checked before this update; the branch had no remote divergence. Reviewed 11 changed files and scanned all 79 tracked files: zero targeted secret-pattern matches, zero tracked ignored/private/generated files, and no credential or local configuration files staged. Whitespace checks passed. The authorized commit/push is followed by a local-versus-remote hash check; the final hash is reported after upload rather than embedded in its own commit.
+
+## 2026-11-14 — Tableau dashboard copy generated; visual acceptance pending
+
+The user screenshot confirms the repaired revenue probe displays $330,922.95. Built a separate `dashboard/workbooks/SYNTHETIC_Growth_DASHBOARDS.twb` with 29 calculated/comparison sheets, three dashboard layouts, synthetic labels, observation/attribution notes and scoped parameter controls. The original draft and backup remain byte-identical (SHA-256 `9bf07d7c6ad13cbc6ca8bcdf0461b63c0d51bc0beab8d5ee4e0810e8d7b37397`). No original data or historical work was replaced.
+
+Diagnosed and fixed generated-format issues: invalid formatting attributes, missing worksheet window cards and missing dashboard view references. Tableau then required extracts (error 3C242D89), so installed official Hyper API 0.0.26479, cffi 2.1.1 and pycparser 3.12 into a separate ignored Python 3.14.8 tooling environment. Compatible ARM64 binary wheels were checked before installation; project `.venv` remains unchanged. Hyper runs locally with telemetry disabled. The sandbox initially blocked its required Unix socket; authorized local execution succeeded. No cloud upload, public publishing or paid activation occurred.
+
+Actual validation: 51 local tests pass; baseline aggregate rows are 90 Overview / 1,187 Funnel / 360 Acquisition, all exactly equal to durable local Hyper extracts. Eight full/filtered SQL-to-Hyper comparisons have zero count/money differences. Fifty generated-workbook calculation/filter-predicate comparisons pass in Hyper SQL with explicit real-division semantics. These checks are not Tableau UI interaction tests. Extracts are content-addressed and never appended. Dataset observation/identity/attribution assumptions remain unchanged.
+
+Tableau Public 2026.3 application `log_6.txt` records DOM loading `ok` at 00:42:46.654 and workbook loading `ok` at 00:42:47.082 on November 14. No query/calculation/extract syntax errors were found in that log at inspection. Full rendering and interactive filter acceptance are still unverified because computer controls remain attached to the original Tableau process. The workbook is **in development, not complete**. Next: inspect the three generated dashboard tabs and representative filters listed in `dashboard/README.md`. Work remains local and uncommitted under the current instruction; no push performed.
+
+## Dashboard acceptance status — updated 2026-11-15
+
+**Overall milestone PENDING final acceptance.** This table is the current status; dated entries below retain historical failures and superseded next actions. Use `dashboard/workbooks/SYNTHETIC_Growth_REVIEW.twbx`. The single remaining checklist is `dashboard/INTERACTION_CHECKS.md`.
+
+| Component | Completed work | Validation evidence | Known issue | Next action |
+|---|---|---|---|---|
+| Preservation | Original draft, backups, CSVs and extracts preserved | Earlier hash checks; no workbook modifications in current review | None identified | Preserve originals |
+| Overview | Seven KPIs, January/full period, corrected period note | Screenshots match SQL; agent rechecked all January KPIs on Nov 15 | None in reviewed states | Only reverse isolation and portable runtime check |
+| Funnel | Baseline, January/full selected cohort, April empty and reset | User screenshots match stages, losses, printed conversion labels and quality count | Full-period Google/Meta numeric labels not yet directly observed | Two tooltips during portable check |
+| Acquisition | Baseline, January campaign, conflicting empty case and reset | All six totals and all 16 campaign labels match SQL; empty screenshot shows 0 marks | None in reviewed states | Only reverse isolation and portable runtime check |
+| Filter isolation | Acquisition selectors do not affect Overview/Funnel | Nov 15 agent navigated from conflicting Acquisition to correct January Overview/Funnel | Reverse-direction output screenshots match; confirmation Funnel selectors remained active is pending | Final checklist A |
+| Automated checks | SQL reconciliation, formula predicates, package/data checks | Eight SQL checks, 50 expression checks, 51 tests, 1,637 relocated rows (previous runs) | Automated checks are not Tableau interactions | Retain separately; no unnecessary reruns |
+| Layout | All 29 sheets render across screenshots; corrected notes viewed | No visible warning or unexpected blank chart | Scrolling needed in authoring viewport; two channel labels omitted | Inspect portable views and two tooltips |
+| Computer control | Attachment/navigation work; Acquisition isolation completed | Actual UI observations Nov 15 | Dropdown click selects container without opening choices | User completes single consolidated remaining batch |
+| Portable package | Seven-entry package; separate byte-identical copy prepared | SHA256 182481c1f06f29417e7231ea9fa5d9fe52b1289cb3dd8a7934dd8b79b1f93c3c; no workstation absolute paths; folder contains only TWBX | Relocated Tableau close/reopen not yet observed | Final checklist B |
+
+
+
+The generated `.twb` was backed up before replacing six text-table comparison marks with bars. No dataset values or KPI formulas were changed. Portable package: `dashboard/workbooks/SYNTHETIC_Growth_PORTABLE.twbx`. Rebuild using `.venv/bin/python scripts/package_tableau_dashboard.py`; relocation validation uses the isolated Hyper environment and `scripts/validate_portable_tableau.py`. The package is a local deliverable candidate, not a completed dashboard milestone. Tableau’s official packaged-workbook guidance was reviewed: https://help.tableau.com/current/pro/desktop/en-us/save_savework_packagedworkbooks.htm .
+
+
+### Invalid-data-source investigation and isolated repair candidate
+
+Preserved original draft, backup, all three CSVs and all three Hyper extracts by SHA-256. Saved an additional content-addressed `FAILED_*.twb` backup of the generated workbook before repair. The failed generated TWB and portable TWBX remain unchanged. Preservation hashes are in ignored `dashboard/workbooks/repair_preservation.json`.
+
+Inspection of the affected worksheet and all 29 peers found each source list begins with `Parameters`, whose datasource explicitly has `hasconnection=false`, followed by the actual analytical source. The working probe begins with its connected analytical datasource. All named analytical sources exist; worksheet dependency columns and column instances resolve; CSV and Hyper paths exist; named connection and relation references match; metadata object IDs match their logical object; extract relations map to `[Extract].[Extract]`. This rules out those structural/path defects but does not prove every aspect of Tableau's internal model is valid.
+
+Leading causal hypothesis: the connectionless parameter source is being selected as the worksheet's primary source. The generator now puts the analytical source first and writes **only** `SYNTHETIC_Growth_REPAIRED.twb`. A canonical XML comparison proves the 29 source-list reorderings are the sole changes from the failed workbook. All 29 worksheets and three dashboards are retained; no warnings are suppressed and no affected sheet is deleted. Actual cause remains **not yet confirmed by a rendered A/B comparison**; source ordering is a narrowly isolated repair candidate, not a claimed successful fix.
+
+`log_8.txt` records repaired DOM load `ok` at 12:06:18.742 and workbook load `ok` at 12:06:19.466 on Nov 14. These events prove opening only; the earlier failure also passed loading. Computer controls still attach to the original draft process, so repaired warnings, dashboard totals and filter behavior remain unobserved. The 29-sheet reference/path audit passed and preservation hashes match. Passing SQL/data/expression checks are separate evidence and **do not override failed Tableau validation**.
+
+Next required visual evidence: in the repaired workbook, inspect Session starts (expected 2,700 unfiltered) and all three dashboards for warnings. Only after worksheet validity passes, test the SQL-derived combinations, resets and empty cases in `dashboard/INTERACTION_CHECKS.md`. Close/reopen and renewed portability acceptance also remain pending. All work remains local; no commit, push or publication.
+
+Repair-candidate automated recheck: all 50 expression comparisons passed; 51 local tests passed again. This remains independent of the failed/unverified Tableau runtime acceptance.
+
+
+### Latest validation attempt — 2026-11-14
+
+User reports only `SYNTHETIC_Growth_REPAIRED` is open. Fresh native-control attachment timed out and reset the control runtime; one retry returned `Computer Use server error -10005: timeoutReached`. App inventory independently confirms Tableau is running, but no workbook UI state or screenshot was returned. No additional worksheet/filter interaction was executed. Available repaired-workbook logs yielded no new detailed worksheet error; their silence is not proof of successful rendering. Previous passing automated data/expression tests remain historical evidence, not new runtime results. Tableau validation remains failed pending confirmation of the repair. No workbook, CSV or extract was changed during this attempt. Next required input is a screenshot of the current repaired workbook, including any warning, to determine whether source validity is fixed before requesting further filter tests.
+
+
+### Repaired Overview screenshot review — 2026-11-14
+
+Reviewed attachment `codex-clipboard-b15a1ff4-7879-4813-b5ff-228580557989.png`. No datasource warning, error dialog or missing-data placeholder is visible. Six readable Overview KPIs match the full-period SQL values. Start 01/01/2026 and end 31/03/2026 controls are visible, but their operation is not tested. Currency has dollar signs/two decimals, conversion has two percentage decimals, and sessions has a thousands separator. Synthetic heading and reporting-period/cutoff note are present.
+
+The open Show Me panel and horizontal viewport leave the rightmost Orders card unreadable and truncate part of the explanatory note. This is an observed visibility/layout limitation, not proof the sheet is absent or its value wrong. Long visible KPI titles wrap without apparent lost text. The Sessions mark is blue-highlighted; the screenshot alone does not establish whether this is selection state or saved styling. Funnel and Acquisition tabs exist, but their contents and all 29 worksheet validity remain unverified. A KPI-only Overview is expected; absence of charts on this view is not itself missing content.
+
+The control-service timeout remains separate from workbook validation. No new tool interaction, filter test or close/reopen test passed merely because this screenshot was supplied. Next checks: unobscured Orders card, Funnel's previously failing Session starts, Acquisition totals/charts, actual filter combinations/reset/empty cases, and repaired portable package close/reopen. No workbook/data files were changed in this screenshot-review turn.
+
+
+### Four-screenshot acceptance review and separate note correction
+
+Reviewed attachments `b001c190` (January Overview), `78b15b5a` (full Overview), `964ceb4b` (Acquisition), and `77648404` (Funnel), using fresh SQLite queries. Full values and readable campaign/device/source labels are recorded in `dashboard/SCREENSHOT_REVIEW.md`. Every readable metric matches SQL. The screenshot evidence resolves the reported baseline Session starts failure; it does not prove all filters work.
+
+Created `SYNTHETIC_Growth_REVIEW.twb` by changing only the three available-period notes in REPAIRED, verified by XML comparison. No analytical content was rebuilt or removed. Packaged REVIEW into `SYNTHETIC_Growth_REVIEW.twbx` with relative local-data paths and no workstation fingerprint attributes. Original and previous candidate workbooks remain unchanged. The new package is the exact remaining-acceptance filename.
+
+PASS: baseline dashboard render states, January Overview state, all readable numerical labels, 50 automated expression checks on REVIEW, seven-entry archive integrity and relocated CSV/Hyper row equality. FIXED BUT VISUALLY PENDING: available-period wording. PENDING: Funnel/Acquisition combinations, reset actions, empty cases, filter isolation, omitted label tooltips and actual REVIEW package opening/closing/reopening. Control attachment timed out; no UI interactions are claimed. No publishing, external accounts, paid services, commit or push.
+
+Final local checks for this review: 51 tests passed again; original/data preservation hashes match; Git whitespace checks passed. No further Tableau interaction was possible.
+
+## 2026-11-14 — post-restart interaction evidence
+
+- PASS: attached to the exact REVIEW TWBX; Overview visibly showed 2,700 sessions, 377 converting sessions, 13.96%, $330,922.95 net, $14,084.25 refunds and $44,259.88 spend, without a visible warning. Orders were outside the right viewport; do not count this as a new check of that mark. Corrected available-data/selected-period note is visible.
+- PASS (visible marks only): changed Funnel end date to January 31; 930 starts, 819 views, 357 carts, 225 checkouts and losses 111/462/132/100 match a fresh run of the existing SQLite transformations. Rightmost purchase and lower quality mark were outside the viewport.
+- PASS (visible marks only): selected April 1–30; visible Funnel metrics/comparisons became empty, and Acquisition inherited the dates with visible KPIs/charts empty. Fresh SQLite confirms zero qualifying rows in all three sources. No stale values or infinity shown.
+- PASS (visible marks only): reset Acquisition dates to January 1–March 31; visible spend $44,259.88, attributed net $173,184.63, 203 orders and 3.91 ROAS returned. Date input initially retained March 30; explicit accessible value plus Return corrected it and results were visually checked.
+- BLOCKED automation: dropdown clicks selected dashboard containers without opening choices; keyboard attempts did not change them. Presentation toggle changed its accessibility flag without changing the visible authoring layout. This is an interaction limitation, not evidence of a workbook calculation error. No further repetitive retries.
+- PENDING: Funnel/Acquisition selector combinations, selector resets/isolation, contradictory campaign empty case, offscreen marks/tooltips, and opening/closing/reopening a relocated copy in Tableau. User-reported post-reboot opening plus observed data is fresh-session evidence, not the relocated acceptance check.
+- No workbook/data/code was rebuilt or saved, and nothing was published. Current unsaved UI dates are January 1–March 31 with all selectors still All. Overall milestone remains PENDING. Next manual batch: January/mobile/google/returning_visit; fresh SQLite gives 87 → 79 → 24 → 15 → 9, losses 8/55/9/6 and 10.34%.
+
+### Additional Funnel screenshot — full-period combination
+
+PASS: user screenshot `codex-clipboard-f431d8b7-f361-437f-9813-ae0a3d241517.png` visibly selects January 1–March 31, mobile / google / returning_visit. Fresh execution of existing SQLite dashboard transformations confirms every displayed value: stages 242 → 216 → 71 → 47 → 23; losses 26 / 145 / 24 / 24; both comparison bars 9.50%; skipped/out-of-order 0. No visible warning or missing chart. This verifies that rendered combination state, not the requested January-only case or reset/isolation. Next action: change only the end date to January 31 and verify 87 → 79 → 24 → 15 → 9, losses 8 / 55 / 9 / 6, 10.34%, skipped 0. No workbook or data changes.
+
+### January Funnel combination — screenshot verified
+
+PASS: screenshot `codex-clipboard-ca1eea01-c483-429c-8391-344619e27733.png` shows January 1–31, mobile / google / returning_visit. All visible results match the previously executed SQLite expectations: stages 87 → 79 → 24 → 15 → 9; losses 8 / 55 / 9 / 6; both conversion charts 10.34%; skipped/out-of-order 0. No visible warning or missing chart. This is actual Tableau rendered-filter evidence, separate from automated expression checks. Next: verify this selected cohort becomes empty for April, then reset dates and all three selectors and verify full-period totals. Acquisition combinations, filter isolation and relocated close/reopen remain pending; milestone not complete.
+
+### Funnel empty-result and reset — screenshot verified
+
+PASS: `codex-clipboard-801e50f9-68f1-4bed-a2bf-28cd855f6d31.png` shows April 1–30 with mobile/google/returning_visit retained. All five stage marks, four loss marks, both comparison charts and the quality count are empty, consistent with zero qualifying SQL rows; no stale numbers or misleading 0% remain.
+
+PASS: `codex-clipboard-26422e16-0611-4d57-90c7-fb0a0b1e9dde.png` shows January 1–March 31 and all three selectors reset to All. Stages 2,700 → 2,380 → 1,036 → 677 → 377, losses 320/1,344/359/300, skipped 0, device labels 18.57%/11.78% and printed channel labels 14.63%/14.24% match SQL. Both comparison charts return, with no visible warning. Google/Meta numeric labels remain unprinted, not separately verified by tooltip. Blue cart mark is selection highlighting. These screenshots verify actual rendered empty/reset states; automated expression checks remain separately documented.
+
+Next short batch: Acquisition January 1–31, paid source google, campaign syn_google_prospecting; expect $3,722.01 spend, $15,363.94 attributed net, 18 orders, 4.13 ROAS, $248.13 first-observed paid CAC proxy and 16 days with spend and zero attributed orders. Acquisition interaction cases, cross-dashboard filter isolation and relocated Tableau close/reopen remain pending. No workbook/data modification or publication.
+
+### Acquisition January combination — screenshot verified
+
+PASS: `codex-clipboard-b3d7fbb5-2496-4c4f-9c0d-80fe416f90ed.png` visibly selects January 1–31, paid source google and campaign syn_google_prospecting. All six displayed metrics match existing SQL expectations: spend $3,722.01; paid-attributed net revenue $15,363.94; 18 attributed orders; net ROAS 4.13; first-observed paid CAC proxy $248.13; 16 days with spend and zero attributed orders. All four single-campaign charts render and their printed values match the KPIs. Correct available-period/selected-period note and attribution limitations are visible. No visible warning. This is rendered Tableau combination evidence, distinct from automated formula validation.
+
+Next: keep January/google and select syn_meta_prospecting to verify contradictory-filter empty results, then reset dates to January 1–March 31 and both Acquisition selectors to All. Cross-dashboard filter isolation and relocated close/reopen remain pending. Workbook milestone remains incomplete; original workbook and data unchanged.
+
+### 2026-11-15 — Acquisition full reset screenshot verified
+
+PASS: `codex-clipboard-8e0afe03-f798-420c-8831-04f871d2c6bf.png` shows January 1–March 31 and both Acquisition selectors All. All six totals match SQL: $44,259.88 spend, $173,184.63 attributed net, 203 orders, 3.91 ROAS, $245.89 first-observed paid CAC proxy and 195 days with spend and zero attributed orders. All four campaigns return on each chart; all 16 numerical labels are now readable and match previously computed SQL expectations. In campaign order Google prospecting / Google retargeting / Meta prospecting / Meta retargeting: spend $11,356.56 / $11,670.38 / $10,091.24 / $11,141.70; net $42,447.72 / $50,380.26 / $33,420.01 / $46,936.64; ROAS 3.74 / 4.32 / 3.31 / 4.21; CAC proxy $270.39 / $216.12 / $288.32 / $227.38. No visible warning or missing chart. The header is above the scrolled viewport.
+
+PENDING: no screenshot or explicit result supplied yet for January/google/syn_meta_prospecting contradictory-filter empty case. Do not infer it passed from the reset screenshot. Cross-dashboard filter isolation and relocated Tableau close/reopen remain pending. Next short manual batch requests just the contradictory case. Original files preserved; no publication or milestone completion claim.
+
+### 2026-11-15 — conflicting empty case and isolation consolidation
+
+PASS: screenshot `codex-clipboard-d2d2babb-6a87-4a65-9f24-def1730a18a5.png` shows January 1–31, google and syn_meta_prospecting. All visible KPI/chart marks are empty, status shows 0 marks, and no warning appears. This matches the zero-row contradictory predicate.
+
+PASS: native control attached to REVIEW and confirmed those selectors. Without changing them or dates, agent navigated to Overview: 930 sessions, 125 converting sessions, 13.44%, 125 orders, $106,736.47 net, $4,498.03 refunds, $15,148.71 spend. Funnel selectors remained All: 930 → 819 → 357 → 225 → 125; losses 111/462/132/100. Acquisition selectors therefore did not restrict the observed Overview/Funnel metrics. Dropdown control still selected its container instead of exposing choices; no repeated retries. Left UI on January Funnel with All selectors; Acquisition retains google/meta conflict. No save/publish.
+
+Prepared a byte-identical portable test copy at `/private/tmp/ecommerce-growth-portability-20261115/SYNTHETIC_Growth_REVIEW.twbx`; folder contains no adjacent CSVs/extracts. Seven archive entries and no workstation absolute paths reconfirmed. Actual relocated Tableau opening/closing/reopening remains pending. Consolidated only outstanding checks in `dashboard/INTERACTION_CHECKS.md`: reverse isolation, two missing channel label values, and relocated runtime. Existing combination/empty/reset tests need no repetition.
+
+### 2026-11-18 — final batch output screenshots received
+
+PASS (displayed results): Overview screenshot `codex-clipboard-2bfd2de2-c3b8-462d-83fe-0b382385fe36.png` shows January 1–31 with all seven expected values: 930 sessions, 125 converting sessions, 13.44%, 125 orders, $106,736.47 net, $4,498.03 refunds and $15,148.71 spend. Correct synthetic heading and available-period note are readable. Acquisition screenshot `codex-clipboard-133d6cc5-6c27-4cc4-89b7-e7c9acfa1108.png` shows January/google/syn_google_prospecting with $3,722.01 spend, $15,363.94 attributed net, 18 orders, 4.13 ROAS, $248.13 CAC proxy and 16 zero-order spend days. All four campaign charts and printed labels match. No visible warning or missing content in either view.
+
+Reverse isolation remains pending only the user's confirmation that mobile/google/returning_visit stayed selected on Funnel while these two screenshots were captured; the screenshots cannot show another tab's selector state. No need to repeat these captures if that sequence was followed. Remaining final-batch evidence: full-period Google/Meta Funnel tooltip values and relocated package close/reopen confirmation with three post-reopen dashboard screenshots. No workbook/data changes, publication or completion claim.
+
+## 2026-11-18 — essential local release cleanup
+
+Implemented a sanitized committed Tableau template, removing build dependencies on ignored original/probe files. Build and finalization write separate BUILD/REBUILD candidates; repeated finalization accepts already-correct notes and is byte-identical. The Hyper interpreter fix uses absolute() rather than resolve() to retain virtual-environment identity; it was included in the successful build, not an untested post-build change.
+
+Recorded validation: 51 tests passed; isolated staged-source export generated its own baseline/extracts, passed eight SQL/Hyper cases and 50 expression checks, built 29 worksheets/three dashboards and validated seven archive entries plus all 1,637 relocated rows. Finalization repeatability passed. Canonical rebuilt workbook XML equals REVIEW. All 63 executable/SQL/template/schema/dependency/fixture files match the successful source snapshot; hashes are in release/TESTED_SOURCE_MANIFEST.json. See release/BUILD_VALIDATION.md for exact source identity, resolved interpreter/socket failures and limitations. No successful build was restarted during final cleanup.
+
+Created a concise synthetic portfolio case study, prioritized hypothesis narrative and concrete UNEXECUTED experiment protocol. Reconciled current README/brief/report generator/dashboard guide/integration status; historical BigQuery verification is distinct from current availability. No cloud access or reload occurred. Created permanent release/SYNTHETIC_Growth_REVIEW.twbx, byte-identical to the existing reviewed package (SHA256 182481c1f06f29417e7231ea9fa5d9fe52b1289cb3dd8a7934dd8b79b1f93c3c). Eleven preserved workbook/extract artifact hashes remain unchanged.
+
+Tableau acceptance remains PENDING: (1) confirm Funnel mobile/google/returning_visit stayed selected for the supplied isolation screenshots, (2) full-period Google/Meta channel tooltip values, (3) relocated Tableau close/reopen sequence and three post-reopen views without reconnecting data. Existing passed combination/empty/reset checks need no repetition. The current release candidate is permanent; the earlier temporary copy is only a portability test location.
+
+Local commit follows staged privacy/artifact review. No push or publication is authorized in this release task. The original working draft, failed candidates, environment, exploratory preview, lock/recovery files, private configuration and bulk generated data remain excluded.
+
+Final local release review: 38 staged files before the CSV attribute rule; targeted credential-pattern scan found zero matches, no prohibited private/environment/recovery artifact paths were staged, and all 63 staged tested-source hashes matched the successful snapshot. Packaged XML/CSV members were also inspected; embedded Hyper data had already passed full row equality. CSV CRLF record endings are preserved byte-for-byte with a path-specific .gitattributes whitespace rule rather than altering validated data hashes. This targeted scan is a guardrail, not an exhaustive guarantee against every secret format. No code changes or rebuild were needed in this cleanup.

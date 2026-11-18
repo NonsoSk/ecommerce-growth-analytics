@@ -1,0 +1,269 @@
+{
+  "baseline_fingerprint": "e486a1983c44d36bc6b57eddda6849feff49092ae3acea3b39d319e366f2e5da",
+  "currency": "USD",
+  "end_date_exclusive": "2026-04-01",
+  "files": {
+    "acquisition.csv": {
+      "grain": [
+        "day",
+        "campaign_id"
+      ],
+      "rows": 360,
+      "sha256": "3cc016a555e1c0e1cbe21dc072d094349e20cb32fe7ffe476c1c292aa035acd5"
+    },
+    "funnel.csv": {
+      "grain": [
+        "day",
+        "device",
+        "channel",
+        "visit_type"
+      ],
+      "rows": 1187,
+      "sha256": "761c4349dd2bc5aa3077aa656ffd3391570b62dab9d216aabdacc8b0d7bfbfc3"
+    },
+    "overview.csv": {
+      "grain": [
+        "day"
+      ],
+      "rows": 90,
+      "sha256": "5234942a6662b5bc75c1c0feed4a25ff6bd112ac5d4c1dc4ad2ecfe4a3f9d60a"
+    }
+  },
+  "filtered_validation": [
+    {
+      "dataset": "overview",
+      "end_inclusive": "2026-03-31",
+      "filters": {},
+      "sql_differences": {
+        "converting_sessions": 0,
+        "net_revenue_cents": 0,
+        "orders": 0,
+        "refunds_cents": 0,
+        "sessions": 0,
+        "spend_cents": 0
+      },
+      "start": "2026-01-01",
+      "values": {
+        "conversion_rate": 0.13962962962962963,
+        "converting_sessions": 377,
+        "missing_spend_days": 0,
+        "net_revenue_cents": 33092295,
+        "orders": 377,
+        "refunds_cents": 1408425,
+        "sessions": 2700,
+        "spend_cents": 4425988
+      }
+    },
+    {
+      "dataset": "overview",
+      "end_inclusive": "2026-01-31",
+      "filters": {},
+      "sql_differences": {
+        "converting_sessions": 0,
+        "net_revenue_cents": 0,
+        "orders": 0,
+        "refunds_cents": 0,
+        "sessions": 0,
+        "spend_cents": 0
+      },
+      "start": "2026-01-01",
+      "values": {
+        "conversion_rate": 0.13440860215053763,
+        "converting_sessions": 125,
+        "missing_spend_days": 0,
+        "net_revenue_cents": 10673647,
+        "orders": 125,
+        "refunds_cents": 449803,
+        "sessions": 930,
+        "spend_cents": 1514871
+      }
+    },
+    {
+      "dataset": "funnel",
+      "end_inclusive": "2026-03-31",
+      "filters": {},
+      "sql_differences": {
+        "carts": 0,
+        "checkouts": 0,
+        "product_views": 0,
+        "purchases": 0,
+        "session_starts": 0,
+        "sessions": 0,
+        "skipped_or_out_of_order_sessions": 0
+      },
+      "start": "2026-01-01",
+      "values": {
+        "carts": 1036,
+        "carts_to_checkouts_dropoff": 359,
+        "carts_to_checkouts_rate": 0.6534749034749034,
+        "checkouts": 677,
+        "checkouts_to_purchases_dropoff": 300,
+        "checkouts_to_purchases_rate": 0.5568685376661743,
+        "ordered_conversion_rate": 0.13962962962962963,
+        "product_views": 2380,
+        "product_views_to_carts_dropoff": 1344,
+        "product_views_to_carts_rate": 0.43529411764705883,
+        "purchases": 377,
+        "session_starts": 2700,
+        "session_starts_to_product_views_dropoff": 320,
+        "session_starts_to_product_views_rate": 0.8814814814814815,
+        "sessions": 2700,
+        "skipped_or_out_of_order_sessions": 0
+      }
+    },
+    {
+      "dataset": "funnel",
+      "end_inclusive": "2026-01-31",
+      "filters": {
+        "channel": "google",
+        "device": "mobile",
+        "visit_type": "returning_visit"
+      },
+      "sql_differences": {
+        "carts": 0,
+        "checkouts": 0,
+        "product_views": 0,
+        "purchases": 0,
+        "session_starts": 0,
+        "sessions": 0,
+        "skipped_or_out_of_order_sessions": 0
+      },
+      "start": "2026-01-01",
+      "values": {
+        "carts": 24,
+        "carts_to_checkouts_dropoff": 9,
+        "carts_to_checkouts_rate": 0.625,
+        "checkouts": 15,
+        "checkouts_to_purchases_dropoff": 6,
+        "checkouts_to_purchases_rate": 0.6,
+        "ordered_conversion_rate": 0.10344827586206896,
+        "product_views": 79,
+        "product_views_to_carts_dropoff": 55,
+        "product_views_to_carts_rate": 0.3037974683544304,
+        "purchases": 9,
+        "session_starts": 87,
+        "session_starts_to_product_views_dropoff": 8,
+        "session_starts_to_product_views_rate": 0.9080459770114943,
+        "sessions": 87,
+        "skipped_or_out_of_order_sessions": 0
+      }
+    },
+    {
+      "dataset": "funnel",
+      "end_inclusive": "2026-02-28",
+      "filters": {
+        "channel": "organic",
+        "device": "desktop"
+      },
+      "sql_differences": {
+        "carts": 0,
+        "checkouts": 0,
+        "product_views": 0,
+        "purchases": 0,
+        "session_starts": 0,
+        "sessions": 0,
+        "skipped_or_out_of_order_sessions": 0
+      },
+      "start": "2026-02-01",
+      "values": {
+        "carts": 29,
+        "carts_to_checkouts_dropoff": 12,
+        "carts_to_checkouts_rate": 0.5862068965517241,
+        "checkouts": 17,
+        "checkouts_to_purchases_dropoff": 7,
+        "checkouts_to_purchases_rate": 0.5882352941176471,
+        "ordered_conversion_rate": 0.1388888888888889,
+        "product_views": 67,
+        "product_views_to_carts_dropoff": 38,
+        "product_views_to_carts_rate": 0.43283582089552236,
+        "purchases": 10,
+        "session_starts": 72,
+        "session_starts_to_product_views_dropoff": 5,
+        "session_starts_to_product_views_rate": 0.9305555555555556,
+        "sessions": 72,
+        "skipped_or_out_of_order_sessions": 0
+      }
+    },
+    {
+      "dataset": "acquisition",
+      "end_inclusive": "2026-03-31",
+      "filters": {},
+      "sql_differences": {
+        "attributed_orders": 0,
+        "first_observed_purchasers": 0,
+        "net_revenue_cents": 0,
+        "spend_cents": 0
+      },
+      "start": "2026-01-01",
+      "values": {
+        "attributed_orders": 203,
+        "days_with_spend_zero_orders": 195,
+        "first_observed_paid_cac_proxy_cents": 24588.82222222222,
+        "first_observed_purchasers": 180,
+        "missing_spend_days": 0,
+        "net_revenue_cents": 17318463,
+        "net_roas": 3.9129032884860964,
+        "spend_cents": 4425988
+      }
+    },
+    {
+      "dataset": "acquisition",
+      "end_inclusive": "2026-01-31",
+      "filters": {
+        "campaign_id": "syn_google_prospecting"
+      },
+      "sql_differences": {
+        "attributed_orders": 0,
+        "first_observed_purchasers": 0,
+        "net_revenue_cents": 0,
+        "spend_cents": 0
+      },
+      "start": "2026-01-01",
+      "values": {
+        "attributed_orders": 18,
+        "days_with_spend_zero_orders": 16,
+        "first_observed_paid_cac_proxy_cents": 24813.4,
+        "first_observed_purchasers": 15,
+        "missing_spend_days": 0,
+        "net_revenue_cents": 1536394,
+        "net_roas": 4.127861021329873,
+        "spend_cents": 372201
+      }
+    },
+    {
+      "dataset": "acquisition",
+      "end_inclusive": "2026-02-28",
+      "filters": {
+        "channel": "meta"
+      },
+      "sql_differences": {
+        "attributed_orders": 0,
+        "first_observed_purchasers": 0,
+        "net_revenue_cents": 0,
+        "spend_cents": 0
+      },
+      "start": "2026-02-01",
+      "values": {
+        "attributed_orders": 36,
+        "days_with_spend_zero_orders": 27,
+        "first_observed_paid_cac_proxy_cents": 19706.676470588234,
+        "first_observed_purchasers": 34,
+        "missing_spend_days": 0,
+        "net_revenue_cents": 2989326,
+        "net_roas": 4.461500805191433,
+        "spend_cents": 670027
+      }
+    }
+  ],
+  "label": "SYNTHETIC DEMONSTRATION ONLY \u2014 BASELINE, NO QUALITY FIXTURES",
+  "observation_cutoff_exclusive": "2026-04-16",
+  "seed": 42,
+  "sql_sha256": {
+    "acquisition.sql": "6d65e8ea3129b1dc8c715466ca832bcca590e7cd71c8b9a0b68a8df259cf8a7a",
+    "funnel.sql": "942744fcbc52ab9b2374894d3f9a40c4aa38e75d8d16efb4d212c1d5bf7b8381",
+    "overview.sql": "ffd7faed2dbf6ca16c569b4a1de9dfd3f3e74ef4d890f866e0a4c2439ba3f05c"
+  },
+  "start_date": "2026-01-01",
+  "tableau_workbook_status": "data_export_only_see_PROGRESS_for_UI_acceptance",
+  "timezone": "UTC"
+}

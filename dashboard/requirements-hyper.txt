@@ -1,0 +1,4 @@
+# Optional, isolated Tableau extract tooling; Python 3.14/macOS ARM64 verified.
+tableauhyperapi==0.0.26479
+cffi==2.1.1
+pycparser==3.12

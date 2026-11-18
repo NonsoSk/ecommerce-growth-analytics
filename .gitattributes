@@ -1,0 +1,2 @@
+# Preserve validated CSV bytes/hashes; Python csv writes CRLF records.
+dashboard/data/*.csv -text whitespace=cr-at-eol

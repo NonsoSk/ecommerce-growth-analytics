@@ -25,8 +25,8 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 
 ## Scope and constraints
 
-The completed work includes synthetic generation, SQLite analysis and validated BigQuery sandbox execution. Real data collection, real business conclusions, other source account configuration, dashboards and experiments remain out of scope. Revenue definitions address refunds, cancellations, tax, shipping, discounts and currencies. Ad-platform attributed conversions can overlap and must not be added as unique orders. Attribution is not proof of incremental impact.
+The completed work includes synthetic generation, SQLite analysis and validated BigQuery sandbox execution. Real data collection, real business conclusions, other source account configuration and executed experiments remain out of scope. Local dashboards and proposed experiments are implemented, with Tableau acceptance pending. Revenue definitions address refunds, cancellations, tax, shipping, discounts and currencies. Ad-platform attributed conversions can overlap and must not be added as unique orders. Attribution is not proof of incremental impact.
 
 ## Planned deliverables
 
-A measurement plan, data dictionary, synthetic quality checks, SQLite purchase/revenue reconciliation, funnel/acquisition analysis and reviewed synthetic report are implemented. The BigQuery synthetic demonstration is verified; real source mapping and analysis, production warehouse operation, dashboard and prioritized experiment recommendations remain planned.
+A measurement plan, data dictionary, synthetic quality checks, SQLite purchase/revenue reconciliation, funnel/acquisition analysis and reviewed synthetic report are implemented. The BigQuery synthetic demonstration is verified; real source mapping and analysis, production warehouse operation remain planned. Three local dashboards, a prioritized hypothesis report and an unexecuted experiment protocol are prepared. Portfolio release remains pending the documented Tableau evidence.
