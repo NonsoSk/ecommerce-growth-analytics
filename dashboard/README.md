@@ -1,6 +1,6 @@
 # Local synthetic Tableau dashboard
 
-Three dashboards / 29 worksheets are accepted for this synthetic portfolio demonstration. Baseline, combinations, empty cases, resets, both isolation directions and relocated close/reopen have evidence in [INTERACTION_CHECKS.md](INTERACTION_CHECKS.md). Use **../release/SYNTHETIC_Growth_REVIEW.twbx**. The accepted user-edited layout is preserved; the preceding release is backed up under release/backups. Original draft/probe files are untouched. See [adoption provenance](../release/ACCEPTANCE.md).
+Three dashboards / 29 worksheets are accepted for this synthetic portfolio demonstration. Baseline, combinations, empty cases, resets, both isolation directions and relocated close/reopen have evidence in [INTERACTION_CHECKS.md](INTERACTION_CHECKS.md). Use [the final self-contained workbook](../release/SYNTHETIC_Growth_REVIEW.twbx). Download the TWBX from GitHub, then open it locally in Tableau Public; do not choose Save to Tableau Public. The accepted source used Tableau 2026.3 on macOS. All three views should open with January 1–March 31 and All selectors, without reconnecting data. The accepted user-edited layout is preserved; the preceding release is backed up under release/backups. Original draft/probe files are untouched. See [adoption provenance](../release/ACCEPTANCE.md).
 
 ## Data and calculations
 
@@ -25,7 +25,7 @@ The template in templates/workbook.twb retains only workbook format settings, an
 
 ## Evidence and limits
 
-Previously recorded: 51 local tests; 1,637 CSV/Hyper rows identical; eight SQL checks; 50 expression comparisons. Fresh release-build evidence is in ../release/BUILD_VALIDATION.md. [Evidence index](../release/EVIDENCE_INDEX.md) separates historical cloud results, automated checks and actual UI evidence. Rebuilding is not a claim of new Tableau visual acceptance. Keep the reviewed candidate until any rebuilt replacement is separately accepted.
+Previously recorded: 51 local tests; 1,637 CSV/Hyper rows identical; eight SQL checks; 50 expression comparisons. Historical build evidence is in [BUILD_VALIDATION.md](../release/BUILD_VALIDATION.md); the adopted-layout build is in [ACCEPTANCE.md](../release/ACCEPTANCE.md). [Evidence index](../release/EVIDENCE_INDEX.md) separates historical cloud results, automated checks and actual UI evidence. Rebuilding is not a claim of new Tableau visual acceptance. Keep the reviewed candidate until any rebuilt replacement is separately accepted.
 
 No external source ingestion, public publication, paid service, real finding or experiment result is included.
 

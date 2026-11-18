@@ -1,6 +1,6 @@
 # Local SQLite analysis — Milestone 2
 
-**Synthetic-data analysis; in development. BigQuery remains planned and is not implemented.**
+**Synthetic-data analysis. Local SQLite is implemented; BigQuery parity was verified historically on November 13, 2026. Current cloud availability is not asserted.**
 
 ## One command
 
@@ -54,10 +54,10 @@ One Google session has two orders with 18,000 net cents after refunds, but one c
 
 The original event-quality fixtures are loaded unchanged into **separate** databases using this fixture's matching `fixture_session`/`fixture_tx` context. This demonstrates duplicate, missing-ID and late-arrival handling through the same SQL audit used by baseline. These cases are not appended to the baseline or treated as baseline findings.
 
-## BigQuery migration considerations — prepared locally, cloud unverified
+## BigQuery migration — implemented, historically verified
 
-Milestone 3 now provides explicit schemas, GoogleSQL and a guarded CLI workflow in `bigquery/`. See [BIGQUERY_MIGRATION.md](BIGQUERY_MIGRATION.md) for prerequisites and actual validation status. No BigQuery execution or parity is claimed.
+Milestone 3 now provides explicit schemas, GoogleSQL and a guarded CLI workflow in `bigquery/`. See [BIGQUERY_MIGRATION.md](BIGQUERY_MIGRATION.md) for prerequisites and actual validation status. The November 13 execution passed 96/96 comparisons; see [BIGQUERY_VALIDATION.md](BIGQUERY_VALIDATION.md). Recorded expiration is November 19, 2026 UTC; these results are historical.
 
 Preserve the same grains and acceptance fixtures before porting. Map integer cents to INT64, UTC timestamps to TIMESTAMP, day keys to DATE, and ratios to guarded numeric division (for example SAFE_DIVIDE). Replace SQLite date/julianday functions and the recursive calendar with explicit date/timestamp operations and a generated date array or date dimension. Window ordering and same-session rules must stay explicit.
 
-Do not rely on SQLite's enforced constraints to exist automatically in a warehouse: reimplement key, relationship, amount and freshness assertions as validation jobs. Add ingestion metadata for orders, spend and sessions before attempting true historical as-of reporting. Consider partitioning by occurrence/spend date, clustering by frequently joined IDs, late-data reprocessing and cost controls only during a separately authorized warehouse milestone. Validate identical hand-calculated outputs and source control totals before accepting a port. No cloud project, billing or external account has been configured.
+Do not rely on SQLite's enforced constraints to exist automatically in a warehouse: reimplement key, relationship, amount and freshness assertions as validation jobs. Add ingestion metadata for orders, spend and sessions before attempting true historical as-of reporting. Consider partitioning by occurrence/spend date, clustering by frequently joined IDs, late-data reprocessing and cost controls only during a separately authorized warehouse milestone. Validate identical hand-calculated outputs and source control totals before accepting a port. The authorized synthetic sandbox used an existing project with billing disabled at verification; no real source connectors were implemented.
