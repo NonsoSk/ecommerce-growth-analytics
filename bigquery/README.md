@@ -1,6 +1,6 @@
 # BigQuery migration
 
-**Live synthetic execution verified: 96/96 BigQuery-versus-SQLite comparisons passed.** See [validation evidence](../docs/BIGQUERY_VALIDATION.md). Read [the migration guide](../docs/BIGQUERY_MIGRATION.md) before any cloud operation.
+**Historical live synthetic execution verified November 13, 2026: 96/96 BigQuery-versus-SQLite comparisons passed.** Current cloud availability has not been queried; recorded table expiration is November 19, 2026 UTC. See [validation evidence](../docs/BIGQUERY_VALIDATION.md). Read [the migration guide](../docs/BIGQUERY_MIGRATION.md) before any cloud operation.
 
 - `schemas/`: eight explicit raw schemas; no automatic field inference.
 - `sql/models.sql`: typed GoogleSQL model CTEs, preserving the validated measurement rules.

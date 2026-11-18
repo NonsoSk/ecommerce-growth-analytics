@@ -2,11 +2,38 @@
 
 **Fictional DTC mattress retailer. Synthetic demonstration only; no findings about Puffy, real customers or measured commercial improvements. Dashboard acceptance completed November 18, 2026.**
 
+## Contents
+
+- [Question and approach](#question-and-approach)
+- [Data and relationships](#data-and-relationships)
+- [Calculated synthetic results](#calculated-synthetic-results)
+- [How I worked and why these choices matter](#how-i-worked-and-why-these-choices-matter)
+- [What I would investigate next](#what-i-would-investigate-next)
+- [Verification, challenges and my role](#verification-challenges-and-my-role)
+- [What is complete and what remains optional](#what-is-complete-and-what-remains-optional)
+
 ## Question and approach
 
 Where do journeys lose potential buyers, how does acquisition performance vary, and what deserves investigation? I defined sessions, visitors, orders, revenue and attribution before analysis. A deterministic 90-day dataset makes the work reproducible without exposing customer information. Python generates and validates data; SQLite calculates results; equivalent GoogleSQL was executed in a BigQuery sandbox; three local Tableau dashboards present the reconciled baseline.
 
 Seed 42 covers January 1–March 31, 2026 UTC, with refund observation through April 16 exclusive. There are 1,496 observed visitor identities, 2,700 sessions, 7,170 events, 377 orders and 79 partial refunds. Dataset fingerprint: `e486a1983c44d36bc6b57eddda6849feff49092ae3acea3b39d319e366f2e5da`.
+
+## Data and relationships
+
+I created the data with a fixed random seed rather than downloading retailer records. The seed fixes the simulated choices so another reviewer can regenerate the same inputs. The reporting period is 90 days; later modeled refunds use the explicit observation cutoff rather than being silently dropped.
+
+| Table | What one row represents | How it connects |
+|---|---|---|
+| Customers | One fictional observed visitor identity (1,496 total), including nonbuyers | Customer ID links visits and orders; it is not proof of lifetime customer status |
+| Sessions | One visit (2,700) | Links identity, device, traffic source and optional paid campaign |
+| Events | One recorded journey event (7,170 baseline) | Session ID links steps; transaction ID links a purchase to its order |
+| Orders | One order (377) | Links identity, originating session and transaction |
+| Order items | One merchandise line (377 in this baseline) | Order ID connects prices, discounts and quantities; independent tests also cover multi-item orders |
+| Refunds | One partial merchandise refund record (79) | Links the relevant item/order; several refunds cannot exceed the refundable amount |
+| Campaigns | One fictional campaign (4) | Stable campaign IDs connect sessions and advertising spend |
+| Daily advertising spend | One campaign on one day (360) | Outcomes must be aggregated to that same grain before joining |
+
+All identifiers are fictional; there are no names, emails or customer records. Values use USD and UTC. The model simplifies prices, returns, visitor identity and attribution and deliberately encodes different device probabilities. Missing landing pages and absent ingestion timestamps for some financial sources limit the analyses I can justify. The [data dictionary](DATA_DICTIONARY.md), [simulation assumptions](SIMULATION_ASSUMPTIONS.md) and [measurement review](MEASUREMENT_REVIEW.md) describe the details.
 
 ## Calculated synthetic results
 
@@ -55,4 +82,4 @@ The relocated source TWBX was closed and reopened by me without reconnecting dat
 
 The synthetic portfolio scope is complete: measurement definitions, reproducible data, local SQL/Python analysis, historical BigQuery verification, local dashboards, quality evidence, a case study and a proposed experiment. Revenue and ROAS are not profit: cost of goods, fulfilment and other operating costs are not modeled. Attributed revenue is not causal lift, and the first-observed paid acquisition-cost proxy is not verified new-customer acquisition cost.
 
-BigQuery verification occurred November 13, 2026; recorded sandbox expiration is November 19. Current cloud availability was not queried for release. Local data and the packaged workbook preserve the demonstration independently of those tables. Real-source connectors, landing-page instrumentation, longer attribution windows, real-data validation and execution of a properly designed experiment are optional future work, not hidden prerequisites or completed integrations. Screenshot previews are not bundled; the accepted workbook and evidence records are available.
+BigQuery verification occurred November 13, 2026; recorded sandbox expiration is November 19. Current cloud availability was not queried for release. Local data and the packaged workbook preserve the demonstration independently of those tables. Real-source connectors, landing-page instrumentation, longer attribution windows, real-data validation and execution of a properly designed experiment are optional future work, not hidden prerequisites or completed integrations. Genuine [dashboard previews](../dashboard/screenshots/README.md), the accepted workbook and evidence records are included.

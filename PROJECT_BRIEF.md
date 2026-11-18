@@ -1,6 +1,6 @@
 # Project brief
 
-**In development.** Fictional direct-to-consumer mattress retailer; local synthetic analysis is verified, with no real business results claimed.
+**Synthetic portfolio scope complete; optional production extensions remain future work.** Fictional direct-to-consumer mattress retailer; no real business results claimed.
 
 ## Business objective
 
@@ -10,7 +10,7 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 
 - How does spend relate to measured acquisition and purchases by channel?
 - Where do users leave the product, cart and checkout journey?
-- Why do GA4 purchase events and Shopify orders or revenue differ?
+- How can purchase-event records differ from the order ledger? Synthetic fixtures model these issues; actual GA4/Shopify data are not connected.
 - Which experiments are justified by validated quantitative and qualitative evidence?
 
 ## Milestones and acceptance criteria
@@ -19,14 +19,14 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 2. **Measurement plan and synthetic data (user-facing Milestone 1):** implemented definitions, linked schemas, deterministic 90-day baseline, separate quality fixtures and automated checks. See docs/MEASUREMENT_PLAN.md and docs/SIMULATION_ASSUMPTIONS.md. No business analysis or live integration is implied.
 3. **Local SQL analysis (user-facing Milestone 2):** implemented SQLite schemas, same-session funnels, daily financials, campaign acquisition, purchase-event reconciliation, visit classification, independent fixtures and a reviewed synthetic report. Real-data and causal conclusions are out of scope.
 4. **BigQuery preparation (user-facing Milestone 3) and source connections:** explicit schemas, GoogleSQL and controlled workflow are implemented; live synthetic-data execution passed all 96 BigQuery/SQLite comparisons with billing disabled. Real sources still require separate authorization, documented permissions/extraction/freshness and independent reconciliation. No paid services were activated.
-5. **Analysis and visualization:** build reproducible funnel and acquisition analyses and a Tableau dashboard with definitions and traceable evidence.
-6. **Experiment recommendations:** rank hypotheses using evidence, expected impact, confidence and effort. Specify primary metric, guardrails, eligibility and test design; do not claim causal lift without a suitable experiment.
-7. **Portfolio release:** reproduce outputs, validate AI contributions, review privacy and document limitations before publishing sanitized artifacts.
+5. **Analysis and visualization — complete:** three local Tableau dashboards and 29 worksheets, with reconciled metrics and recorded acceptance evidence.
+6. **Experiment recommendations — complete as proposals:** three prioritized investigations and one unexecuted protocol with eligibility, assignment, primary outcome and guardrails. No impact estimate or causal lift is established.
+7. **Private portfolio release — complete:** reproducible source build, accepted workbook, documented AI review and privacy checks. Uploaded to private GitHub; Tableau remains local and unpublished.
 
 ## Scope and constraints
 
 The completed work includes synthetic generation, SQLite analysis and validated BigQuery sandbox execution. Real data collection, real business conclusions, other source account configuration and executed experiments remain out of scope. Local dashboards and proposed experiments are implemented, with Tableau acceptance completed for the synthetic portfolio scope. Revenue definitions address refunds, cancellations, tax, shipping, discounts and currencies. Ad-platform attributed conversions can overlap and must not be added as unique orders. Attribution is not proof of incremental impact.
 
-## Planned deliverables
+## Completed deliverables and optional extensions
 
 A measurement plan, data dictionary, synthetic quality checks, SQLite purchase/revenue reconciliation, funnel/acquisition analysis and reviewed synthetic report are implemented. The BigQuery synthetic demonstration is verified; real source mapping and analysis, production warehouse operation remain planned. Three local dashboards, a prioritized hypothesis report and an unexecuted experiment protocol are prepared. The private synthetic portfolio release has completed the documented Tableau acceptance checks.

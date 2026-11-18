@@ -10,9 +10,9 @@
 | Shopify | Orders and revenue reference | Order lifecycle, refunds, tax, shipping, discounts, time zone |
 | Google Ads | Spend and attributed conversions | Account currency, dates, attribution window and conversion actions |
 | Meta Ads | Spend and attributed conversions | Account currency, dates, attribution window and overlap |
-| Tableau Public | Implemented local synthetic dashboards using CSV/Hyper extracts | Most rendering/filter cases passed; final acceptance pending. No Tableau cloud publication or BigQuery live connection |
+| Tableau Public | Implemented local synthetic dashboards using CSV/Hyper extracts | Documented acceptance completed November 18; user runtime evidence and automated package validation are distinguished in [ACCEPTANCE.md](../release/ACCEPTANCE.md). No Tableau cloud publication or BigQuery live connection |
 | Hotjar | Qualitative behavior evidence | Consent, masking, sampling and privacy; no identifiable recordings in Git |
-| AI workflow (provider undecided) | Assist code, exploration and explanation | Independently verify every result and record review |
+| AI-assisted development | Used for code, SQL, prose and workbook XML drafting/repair | Reviewed through independent fixtures, execution and user Tableau evidence; no automated production AI integration |
 
 Connect sources gradually with least-privilege access. Document field mappings, grain, extraction timestamps, refresh cadence and limitations. Prefer approved synthetic data until source access and data handling are agreed.
 
@@ -21,3 +21,5 @@ Connect sources gradually with least-privilege access. Document field mappings, 
 The initial authentication blocker is resolved. GitHub CLI verified the active account as `NonsoSk` and the repository as private. Origin is `https://github.com/NonsoSk/ecommerce-growth-analytics.git`. Remote inspection and fetch found no branches or commits; no existing remote files needed reconciliation.
 
 The reviewed initial setup was pushed to `main`, with upstream `origin/main`. Its local and remote commit hashes matched after upload. Keep the repository private, inspect future remote changes before pushing, and never force-push. This source-control connection does not establish any analytics integration.
+
+Current GitHub status: the accepted private release and reviewer documentation were uploaded on November 19, 2026. The current commit is visible in Git history; initial-setup details above are historical. No analytics source connection follows from this GitHub upload.

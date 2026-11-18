@@ -1,3 +1,5 @@
+> Historical investigation record. Pending/failure statements describe the dated stage below, not the final release. See [current acceptance](INTERACTION_CHECKS.md) for resolved status. Retained to explain the repair and evidence trail.
+
 # Four-screenshot review — synthetic demonstration
 
 Reviewed the four user attachments on 2026-11-14 against newly executed SQLite baseline queries. No business findings or causal effects are inferred. Screenshots establish visible rendered states, not every interaction or future reload.

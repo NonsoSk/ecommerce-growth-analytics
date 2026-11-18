@@ -67,7 +67,12 @@ htmlcov/
 !/dashboard/data/acquisition.csv
 /dashboard/data/preview_data.js
 /dashboard/workbooks/
-/dashboard/screenshots/
+/dashboard/screenshots/*
+# Only these visually reviewed, synthetic accepted-layout captures are included
+!/dashboard/screenshots/README.md
+!/dashboard/screenshots/overview-january.png
+!/dashboard/screenshots/funnel-full-period.png
+!/dashboard/screenshots/acquisition-full-period.png
 # Preserve the user's local Tableau draft without committing workstation metadata
 /dashboard/SYNTHETIC_Growth_DRAFT.twb
 

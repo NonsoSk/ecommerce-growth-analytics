@@ -42,7 +42,38 @@ Recorded evidence includes 51 earlier regression tests, eight SQL/Hyper cases, 5
 
 The final repackaged release was checked automatically. Tableau close/reopen evidence comes from the equivalent user-reopened source workbook: the exact extracts and layout were preserved, relative paths normalized, workstation fingerprints removed and matching CSVs restored. The final ZIP did **not** receive a separate agent GUI reopen. See [acceptance provenance](release/ACCEPTANCE.md).
 
-Screenshots were reviewed as user-supplied evidence; no dashboard preview images are bundled here. This presentation-only gap does not affect the accepted workbook or recorded checks.
+## Dashboard previews
+
+Genuine screenshots of the accepted source layout; no numbers or charts were retouched. [Provenance and full-size images](dashboard/screenshots/README.md).
+
+![Synthetic Acquisition dashboard showing full-period paid spend of $44,259.88, attributed net revenue of $173,184.63 and four campaign comparisons](dashboard/screenshots/acquisition-full-period.png)
+
+*Acquisition, January–March: attributed performance is descriptive, not causal or a measure of profit.*
+
+<details>
+<summary>Overview and Funnel previews</summary>
+
+![January synthetic Overview with 930 sessions, 125 converting sessions, 13.44% conversion and $106,736.47 net merchandise revenue](dashboard/screenshots/overview-january.png)
+
+*Overview uses January 1–31, so its totals differ from the full-period results above. The visible tooltip is part of the original capture.*
+
+![Full-period synthetic Funnel with stages 2700, 2380, 1036, 677 and 377, plus device and source comparisons](dashboard/screenshots/funnel-full-period.png)
+
+*Funnel, January–March: ordered same-session stages and comparison rates. The authoring interface and selected-mark tooltip remain visible.*
+
+</details>
+
+## Tools and repository map
+
+| Tool / location | Role |
+|---|---|
+| Python · `src/`, `scripts/`, `tests/` | Deterministic generation, orchestration, reconciliation and independent fixtures |
+| SQLite · `sql/` | Local relational analysis with explicit constraints and repeatable outputs |
+| BigQuery · `bigquery/` | Equivalent GoogleSQL; historical 96/96 live parity, not current-availability assurance |
+| Tableau Public · `dashboard/`, `release/` | Three local dashboards and the self-contained accepted workbook; never publicly published |
+| Git / GitHub | Versioned code, documentation, synthetic exports and release evidence in this private repository |
+
+I recommend investigating product-page clarity first, then comparing mobile journeys within similar cohorts, and reviewing attribution before changing budgets. These are proposed learning priorities, not proven interventions; the [case study](docs/PORTFOLIO_CASE_STUDY.md#what-i-would-investigate-next) sets out the evidence and success measures.
 
 ## Reproduce locally
 

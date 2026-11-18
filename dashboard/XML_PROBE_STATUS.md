@@ -1,3 +1,5 @@
+> Historical investigation record. Pending/failure statements describe the dated stage below, not the final release. See [current acceptance](../release/ACCEPTANCE.md) for resolved status. Retained to explain the repair and evidence trail.
+
 # Tableau XML compatibility probe — not validated
 
 Synthetic demonstration data only. In development. Local work only.
