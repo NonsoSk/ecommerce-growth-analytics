@@ -1,3 +1,5 @@
+> This records the earlier release build. The adopted-layout build and exact source manifest are documented in [ACCEPTANCE.md](ACCEPTANCE.md); earlier pending UI statements below are historical.
+
 # Release build validation — recorded November 18, 2026
 
 **Synthetic-only local release candidate. Tableau final acceptance remains pending. No cloud request, BigQuery reload, publication or paid service was part of this build.**

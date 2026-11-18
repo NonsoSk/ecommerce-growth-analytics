@@ -1,5 +1,19 @@
 # Progress
 
+## Current acceptance status — November 18, 2026
+
+The synthetic portfolio dashboard is accepted. This summary supersedes historical pending notes below. Permanent workbook: `release/SYNTHETIC_Growth_REVIEW.twbx`; provenance and current hash: `release/ACCEPTANCE.md`. No further user acceptance action is required for the documented scope.
+
+| Component | Completed work | Validation evidence | Known issue | Next action |
+|---|---|---|---|---|
+| Overview | Full/January totals and isolated date scope | SQL expectations and screenshots including final 5e5ba463 | Small authoring viewport may need scrolling | None required |
+| Funnel | Ordered stages, cohorts, comparisons, reset/empty/isolation | User sequence plus screenshots; Google 12.98%, Meta 14.33% printed | Representative cases, not every combination | None required |
+| Acquisition | Campaign-day metrics, reset/conflict/isolation | Final bc208b8b preserves January Google prospecting totals | CAC is first-observed proxy; attribution is not causal | None required |
+| Portable release | Adopted reopened layout; exact extracts; restored CSVs; prior release backup | User close/reopen; canonical XML equivalence; 1,637 relocated rows | Repacked ZIP not separately GUI-opened; equivalence evidence documented | None required |
+| Reproducible build | Committed accepted template; guarded analytical contract | Source-only build stages; 8 SQL/Hyper cases; 50 expressions; 3 new targeted tests | Hyper binary bytes may vary | Use documented rebuild command when needed |
+| Analysis/documentation | Synthetic case study, protocol, dated cloud evidence | Existing independent tests; 1 report-review test | No real-source ingestion or executed experiment; current cloud state unqueried | Optional future work only |
+
+
 ## 2026-11-12 — initial local setup
 
 **Setup-stage status (historical): local foundation verified and uploaded to private GitHub; authentication blocker resolved. See latest milestone below for current status.**
@@ -208,13 +222,13 @@ Tableau Public 2026.3 application `log_6.txt` records DOM loading `ok` at 00:42:
 |---|---|---|---|---|
 | Preservation | Original draft, backups, CSVs and extracts preserved | Earlier hash checks; no workbook modifications in current review | None identified | Preserve originals |
 | Overview | Seven KPIs, January/full period, corrected period note | Screenshots match SQL; agent rechecked all January KPIs on Nov 15 | None in reviewed states | Only reverse isolation and portable runtime check |
-| Funnel | Baseline, January/full selected cohort, April empty and reset | User screenshots match stages, losses, printed conversion labels and quality count | Full-period Google/Meta numeric labels not yet directly observed | Two tooltips during portable check |
+| Funnel | Baseline, January/full selected cohort, April empty and reset | User screenshots match stages, losses, printed conversion labels and quality count | Full-period Google 12.98% / Meta 14.33% now screenshot-verified | No further label evidence needed |
 | Acquisition | Baseline, January campaign, conflicting empty case and reset | All six totals and all 16 campaign labels match SQL; empty screenshot shows 0 marks | None in reviewed states | Only reverse isolation and portable runtime check |
 | Filter isolation | Acquisition selectors do not affect Overview/Funnel | Nov 15 agent navigated from conflicting Acquisition to correct January Overview/Funnel | Reverse-direction output screenshots match; confirmation Funnel selectors remained active is pending | Final checklist A |
 | Automated checks | SQL reconciliation, formula predicates, package/data checks | Eight SQL checks, 50 expression checks, 51 tests, 1,637 relocated rows (previous runs) | Automated checks are not Tableau interactions | Retain separately; no unnecessary reruns |
 | Layout | All 29 sheets render across screenshots; corrected notes viewed | No visible warning or unexpected blank chart | Scrolling needed in authoring viewport; two channel labels omitted | Inspect portable views and two tooltips |
 | Computer control | Attachment/navigation work; Acquisition isolation completed | Actual UI observations Nov 15 | Dropdown click selects container without opening choices | User completes single consolidated remaining batch |
-| Portable package | Seven-entry package; separate byte-identical copy prepared | SHA256 182481c1f06f29417e7231ea9fa5d9fe52b1289cb3dd8a7934dd8b79b1f93c3c; no workstation absolute paths; folder contains only TWBX | Relocated Tableau close/reopen not yet observed | Final checklist B |
+| Portable package | Seven-entry package; separate byte-identical copy prepared | SHA256 182481c1f06f29417e7231ea9fa5d9fe52b1289cb3dd8a7934dd8b79b1f93c3c; no workstation absolute paths; folder contains only TWBX | Relocated close/reopen confirmed by user with screenshots; reopened package differs from committed release | Resolve final artifact identity; see latest checklist |
 
 
 
@@ -325,3 +339,19 @@ Tableau acceptance remains PENDING: (1) confirm Funnel mobile/google/returning_v
 Local commit follows staged privacy/artifact review. No push or publication is authorized in this release task. The original working draft, failed candidates, environment, exploratory preview, lock/recovery files, private configuration and bulk generated data remain excluded.
 
 Final local release review: 38 staged files before the CSV attribute rule; targeted credential-pattern scan found zero matches, no prohibited private/environment/recovery artifact paths were staged, and all 63 staged tested-source hashes matched the successful snapshot. Packaged XML/CSV members were also inspected; embedded Hyper data had already passed full row equality. CSV CRLF record endings are preserved byte-for-byte with a path-specific .gitattributes whitespace rule rather than altering validated data hashes. This targeted scan is a guardrail, not an exhaustive guarantee against every secret format. No code changes or rebuild were needed in this cleanup.
+
+### 2026-11-18 — relocated runtime evidence received; exact release identity unresolved
+
+User explicitly confirms closing/reopening the same relocated TWBX without reconnecting data or warnings. Reviewed screenshots: 90ac97da shows full-period Overview sessions 2,700, converting sessions 377, 13.96%, net $330,922.95, refunds $14,084.25, spend $44,259.88; Orders is outside this viewport (earlier screenshot passed). 783c07e8 shows all Funnel stages 2,700/2,380/1,036/677/377, losses 320/1,344/359/300, skipped 0, devices 18.57%/11.78% and channels direct 14.63%, Google 12.98%, Meta 14.33%, organic 14.24%. c14fd0a1 shows all six Acquisition totals and all 16 campaign labels matching existing SQL evidence. No visible warning or unexpected blank chart. Reopen/label evidence passes for the user's relocated version; no repeated tests needed.
+
+Read-only package comparison found the relocated file now SHA256 7fd815642dfe6dfa524a91ccfcf747dcde7d1457c2365a461159cc1482bf5959, four members, altered layouts; committed release remains 182481c1f06f29417e7231ea9fa5d9fe52b1289cb3dd8a7934dd8b79b1f93c3c, seven members. All three Hyper extracts are byte-identical, top-level calculation formulas unchanged, 29 worksheet names/three dashboards retained, no absolute connection paths in either package. Tableau dependency formula occurrence counts changed, not top-level metric formulas. Neither workbook was modified.
+
+Remaining: earlier reverse-isolation sequence confirmation and choice of final artifact (retain original release or adopt reopened layout-edited copy with preserved original/provenance). Acceptance documentation updated locally; conditional acceptance commit not made because not all requirements are satisfied. No push/publication, cloud operation, rebuild or metric change.
+
+### 2026-11-18 — final isolation accepted and reopened layout adopted
+
+User explicitly confirms January 1–31, Acquisition google/syn_google_prospecting, then Funnel mobile/google/returning_visit retained while capturing Overview and Acquisition. Screenshots 5e5ba463 and bc208b8b match SQL: Overview 930/125/13.44%/125, net $106,736.47, refunds $4,498.03, spend $15,148.71; Acquisition $3,722.01/$15,363.94/18/4.13/$248.13/16. This completes reverse isolation without repeating already-passed tests. Prior post-reopen evidence and explicit no-reconnect/no-warning confirmation satisfy runtime acceptance for the adopted layout.
+
+Preserved preceding release under release/backups, retained exact accepted extracts and sanitized/packaged the user-edited layout with matching CSVs. The source-only adopted-layout build passed eight SQL/Hyper cases, 50 expression checks and all 1,637 relocated rows. All 29 analytical sheet contracts match. Canonical XML matches the accepted source after only path/fingerprint transformations. Three new contract regression tests and one report-review test pass; repeated finalization is byte-identical. See release/ACCEPTANCE.md for exact hashes/source version, resolved metadata-comparison stop and the distinction between user runtime evidence and automated package checks. No original draft or user-relocated source changed.
+
+README, brief, report renderer/report, dashboard guide, case study, checklist and evidence index now agree: documented synthetic portfolio acceptance completed, no real commercial findings or executed experiments, cloud verification historical. Nothing pushed or published. Local commit follows review; only optional enhancements remain.

@@ -1,6 +1,6 @@
 # E-commerce growth analytics — synthetic portfolio case study
 
-**Fictional DTC mattress retailer. Synthetic demonstration only; no findings about Puffy, real customers or measured commercial improvements. Dashboard final acceptance is pending.**
+**Fictional DTC mattress retailer. Synthetic demonstration only; no findings about Puffy, real customers or measured commercial improvements. Dashboard acceptance completed November 18, 2026.**
 
 ## Question and approach
 

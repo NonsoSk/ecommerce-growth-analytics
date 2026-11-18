@@ -1,6 +1,6 @@
 # E-commerce Growth Analytics
 
-**Private release candidate — synthetic demonstration, final Tableau acceptance pending.** Open `release/SYNTHETIC_Growth_REVIEW.twbx`. Read [the case study](docs/PORTFOLIO_CASE_STUDY.md), [evidence index](release/EVIDENCE_INDEX.md), and [remaining acceptance checks](dashboard/INTERACTION_CHECKS.md).
+**Private portfolio release — synthetic demonstration; Tableau acceptance completed November 18, 2026.** Open `release/SYNTHETIC_Growth_REVIEW.twbx`. Read [the case study](docs/PORTFOLIO_CASE_STUDY.md), [evidence index](release/EVIDENCE_INDEX.md), and [completed acceptance checklist](dashboard/INTERACTION_CHECKS.md).
 
 **Status: in development — SQLite analysis and live BigQuery synthetic-data parity verified (96/96 comparisons).**
 
@@ -42,7 +42,7 @@ The default has 1,496 visitor identities, 2,700 sessions, 7,170 events, 377 orde
 
 Read the [measurement plan](docs/MEASUREMENT_PLAN.md), [data dictionary](docs/DATA_DICTIONARY.md), [simulation assumptions](docs/SIMULATION_ASSUMPTIONS.md) and [fixture handling rules](docs/QUALITY_FIXTURES.md). The rules distinguish sessions, orders and customers, original payments and refunds, and attributed performance from causal impact. Advertising spend is never repeated on individual event rows.
 
-The current generator assumes perfect identity linking, fixed journey steps, same-session attribution and simplified prices/refunds. It does not model all real tracking gaps or order lifecycles. Real source ingestion, real-data findings and executed experiments remain absent. Local dashboards are built with final acceptance pending.
+The current generator assumes perfect identity linking, fixed journey steps, same-session attribution and simplified prices/refunds. It does not model all real tracking gaps or order lifecycles. Real source ingestion, real-data findings and executed experiments remain absent. Local dashboards have completed the documented synthetic-data acceptance checks.
 
 ## Milestone 2: reproducible local SQL analysis
 
@@ -56,7 +56,7 @@ The pipeline verifies existing baseline hashes (or generates the default baselin
 
 Read the reviewed [synthetic analysis report](reports/MILESTONE_2_ANALYSIS.md), [measurement review](docs/MEASUREMENT_REVIEW.md) and [SQL pipeline guide](docs/SQL_PIPELINE.md). The default seed-42 run has 1,496 observed visitors, 331 purchasing visitors, 377 orders across 377 converting sessions, 13.96% order conversion and $330,922.95 net merchandise revenue. These are computed simulation outputs, not measured retailer performance. The latest recorded local suite has 51 passing tests; spend and revenue reconcile with zero differences. Migration workflow mocks are local tests, not proof of BigQuery execution.
 
-The SQL distinguishes ledger orders from tracked funnel purchases, first observed from lifetime-new purchasers, and original merchandise revenue from refund-adjusted revenue. Conversion counts distinct buying sessions even when a session has multiple orders. Same-session attribution is descriptive, not causal: direct has no paid campaign assignment and can include missing attribution or prior paid exposure; organic does not imply zero acquisition cost. Landing-page analysis is unavailable because that field does not exist. Earlier cutoffs (`--cutoff YYYY-MM-DD`) flag incomplete refund observation and defer unavailable events. The synthetic analysis has also been verified in BigQuery; the local dashboard candidate is built with acceptance pending.
+The SQL distinguishes ledger orders from tracked funnel purchases, first observed from lifetime-new purchasers, and original merchandise revenue from refund-adjusted revenue. Conversion counts distinct buying sessions even when a session has multiple orders. Same-session attribution is descriptive, not causal: direct has no paid campaign assignment and can include missing attribution or prior paid exposure; organic does not imply zero acquisition cost. Landing-page analysis is unavailable because that field does not exist. Earlier cutoffs (`--cutoff YYYY-MM-DD`) flag incomplete refund observation and defer unavailable events. The synthetic analysis has also been verified in BigQuery; the local dashboard has completed its documented acceptance checks.
 
 ## Milestone 3: verified BigQuery demonstration
 
@@ -76,7 +76,7 @@ With the authenticated CLI on PATH and the existing ignored `bigquery/config.loc
 .venv/bin/python scripts/bigquery_migrate.py execute --config bigquery/config.local.json --acknowledge-cloud-actions --workers 2
 ```
 
-See the [validation evidence](docs/BIGQUERY_VALIDATION.md) for row counts, hashes, quality cases and actual cloud results, and the [migration guide](docs/BIGQUERY_MIGRATION.md) for loading, permissions and sandbox limits. Demo tables expire after seven days (observed expiration: 2026-11-19 UTC); keep local sources and evidence. No real GA4, Shopify, advertising or Hotjar sources are connected. The [follow-up backlog](docs/FOLLOW_UP_BACKLOG.md) keeps attribution/device investigations and independent real-data evidence separate from simulation validation. Tableau local dashboards are built; final acceptance remains pending.
+See the [validation evidence](docs/BIGQUERY_VALIDATION.md) for row counts, hashes, quality cases and actual cloud results, and the [migration guide](docs/BIGQUERY_MIGRATION.md) for loading, permissions and sandbox limits. Demo tables expire after seven days (observed expiration: 2026-11-19 UTC); keep local sources and evidence. No real GA4, Shopify, advertising or Hotjar sources are connected. The [follow-up backlog](docs/FOLLOW_UP_BACKLOG.md) keeps attribution/device investigations and independent real-data evidence separate from simulation validation. Tableau local dashboards have completed the documented acceptance checks.
 
 ## Project layout
 
@@ -112,7 +112,7 @@ Origin is `https://github.com/NonsoSk/ecommerce-growth-analytics.git`. GitHub ac
 
 ## Dashboard milestone — local build awaiting visual acceptance
 
-Three synthetic Tableau dashboards (Overview, Funnel, Acquisition) and 29 worksheets are generated in a separate local workbook. Tableau Public successfully loaded the extract-backed copy; the earlier revenue probe was visually confirmed at $330,922.95. The original draft is preserved. All 51 local tests, eight SQL/Hyper aggregate checks and 50 workbook-expression checks pass. Baseline, representative combinations, empty cases and resets have screenshot evidence. Reverse-isolation sequence confirmation, two tooltip values and relocated close/reopen evidence remain pending. This is not a completed-dashboard claim. Nothing has been published.
+Three synthetic Tableau dashboards (Overview, Funnel, Acquisition) and 29 worksheets are generated in a separate local workbook. Tableau Public successfully loaded the extract-backed copy; the earlier revenue probe was visually confirmed at $330,922.95. The original draft is preserved. All 51 local tests, eight SQL/Hyper aggregate checks and 50 workbook-expression checks pass. Baseline, representative combinations, empty cases and resets have screenshot evidence. Reverse isolation, all channel labels and relocated close/reopen are now supported by user screenshots and explicit sequence confirmation. The adopted layout and reproducible build are documented in release/ACCEPTANCE.md. Nothing has been published.
 
 See [dashboard reproduction and validation](dashboard/README.md). Optional Hyper tooling is isolated from the existing project environment. Baseline-only CSVs and local extracts preserve the dashboard data after cloud expiration. Real customer integrations, real business findings and experiment results remain unimplemented.
 
