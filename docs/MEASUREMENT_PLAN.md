@@ -1,6 +1,6 @@
 # Measurement plan — synthetic Milestone 1
 
-**In development.** This is a measurement contract for a fictional mattress retailer, not findings about Puffy or real customers. The question is where journeys lose potential buyers, how acquisition performance varies, and which issues merit investigation or experiments. Milestone 2 implements local synthetic SQL analysis under these rules; it does not establish real recommendations or measured uplift. See MEASUREMENT_REVIEW.md for reviewed clarifications.
+**In development.** This is a measurement contract for a fictional mattress retailer, not findings about real customers. The question is where journeys lose potential buyers, how acquisition performance varies, and which issues merit investigation or experiments. Milestone 2 implements local synthetic SQL analysis under these rules; it does not establish real recommendations or measured uplift. See MEASUREMENT_REVIEW.md for reviewed clarifications.
 
 ## Shared rules
 

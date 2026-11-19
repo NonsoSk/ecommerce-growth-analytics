@@ -1,4 +1,4 @@
-# Private portfolio release — evidence index
+# Portfolio release — evidence index
 
 **Synthetic only; Tableau synthetic-scope acceptance completed November 18, 2026. No publication, real-source ingestion or executed experiment.**
 

@@ -1,6 +1,6 @@
 # Milestone 2 — SYNTHETIC-DATA ANALYSIS
 
-**In development. Fictional simulation only; not findings about Puffy or real customers. No causal effects, commercial improvements or successful experiments are claimed.**
+**In development. Fictional simulation only; not findings about real customers. No causal effects, commercial improvements or successful experiments are claimed.**
 
 ## Reproduction and provenance
 

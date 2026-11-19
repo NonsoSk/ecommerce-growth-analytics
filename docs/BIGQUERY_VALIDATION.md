@@ -1,6 +1,6 @@
 # BigQuery migration validation — synthetic data only
 
-**In development. Live BigQuery/SQLite parity verified; this is simulation validation, not evidence about Puffy, real customers, causal impact or commercial improvement.**
+**In development. Live BigQuery/SQLite parity verified; this is simulation validation, not evidence about real customers, causal impact or commercial improvement.**
 
 ## Execution record — 2026-11-13
 

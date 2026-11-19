@@ -42,7 +42,7 @@ def render(metadata, outputs, controls, fixtures):
           ('Sessions with immature refund windows',s['refund_immature_sessions'])]
     sections=[
         '# Milestone 2 — SYNTHETIC-DATA ANALYSIS',
-        '**In development. Fictional simulation only; not findings about Puffy or real customers. No causal effects, commercial improvements or successful experiments are claimed.**',
+        '**In development. Fictional simulation only; not findings about real customers. No causal effects, commercial improvements or successful experiments are claimed.**',
         '## Reproduction and provenance',
         'Run `.venv/bin/python scripts/run_analysis.py` from the repository root. It verifies or generates the baseline, loads a fresh constrained SQLite database, exports CSVs, exercises quality fixtures, renders this report to the ignored output folder and runs the complete test suite. The committed report is a reviewed copy; reruns do not overwrite it.',
         f"Seed **{metadata['seed']}**; configured sessions **{metadata['configured_sessions']}**; schema/generator version **{metadata['generator_version']}**. UTC cohort **[{metadata['start_date']}, {metadata['end_date_exclusive']})**; exclusive observation cutoff **{metadata['cutoff']}**. Currency: USD. SQLite **{metadata['sqlite_version']}**; Python **{metadata['python_version']}**.",

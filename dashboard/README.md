@@ -1,6 +1,10 @@
-# Local synthetic Tableau dashboard
+# Exploring the analysis in Tableau
 
-Three dashboards / 29 worksheets are accepted for this synthetic portfolio demonstration. Baseline, combinations, empty cases, resets, both isolation directions and relocated close/reopen have evidence in [INTERACTION_CHECKS.md](INTERACTION_CHECKS.md). Use [the final self-contained workbook](../release/SYNTHETIC_Growth_REVIEW.twbx). Download the TWBX from GitHub, then open it locally in Tableau Public; do not choose Save to Tableau Public. The accepted source used Tableau 2026.3 on macOS. All three views should open with January 1–March 31 and All selectors, without reconnecting data. The accepted user-edited layout is preserved; the preceding release is backed up under release/backups. Original draft/probe files are untouched. See [adoption provenance](../release/ACCEPTANCE.md).
+I organised the analysis into three views so I could move from the overall results to the journey and then to campaign performance. **Overview** shows sessions, converting sessions, orders and reconciled money. **Funnel** follows the ordered journey and compares devices, sources and observed visit cohorts. **Acquisition** compares campaign-day spend with assigned orders and revenue.
+
+The workbook contains 29 worksheets and uses synthetic data only. The documented acceptance checks are complete; the [interaction checklist](INTERACTION_CHECKS.md) separates actual Tableau evidence from automated expression checks. Use [the final self-contained workbook](../release/SYNTHETIC_Growth_REVIEW.twbx): download the TWBX and open it locally in Tableau Public. The accepted source used Tableau 2026.3 on macOS. Default dates are January 1–March 31 and selectors are All; data should be available without reconnecting a source. Do not use Save to Tableau Public to open it locally.
+
+The accepted user-edited layout is preserved. The preceding release is backed up under release/backups, and original drafts remain untouched. The final ZIP was validated automatically; the equivalent relocated source workbook supplied the actual close/reopen evidence. See [adoption provenance](../release/ACCEPTANCE.md).
 
 ## Data and calculations
 

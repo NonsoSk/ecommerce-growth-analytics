@@ -231,7 +231,7 @@ def write_dataset(output, seed=42, sessions=2700, start='2026-01-01'):
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     manifest = {
-        'label': 'SYNTHETIC ONLY — not evidence about Puffy or real customers',
+        'label': 'SYNTHETIC ONLY — not evidence about real customers',
         'generator_version': 1, 'seed': seed, 'sessions': sessions, 'start_date': start,
         'end_date_exclusive': (date.fromisoformat(start) + timedelta(days=90)).isoformat(),
         'observation_cutoff_exclusive': (date.fromisoformat(start) + timedelta(days=105)).isoformat(),

@@ -21,7 +21,7 @@ Analyze acquisition spend and customer journeys, identify conversion problems, r
 4. **BigQuery preparation (user-facing Milestone 3) and source connections:** explicit schemas, GoogleSQL and controlled workflow are implemented; live synthetic-data execution passed all 96 BigQuery/SQLite comparisons with billing disabled. Real sources still require separate authorization, documented permissions/extraction/freshness and independent reconciliation. No paid services were activated.
 5. **Analysis and visualization — complete:** three local Tableau dashboards and 29 worksheets, with reconciled metrics and recorded acceptance evidence.
 6. **Experiment recommendations — complete as proposals:** three prioritized investigations and one unexecuted protocol with eligibility, assignment, primary outcome and guardrails. No impact estimate or causal lift is established.
-7. **Private portfolio release — complete:** reproducible source build, accepted workbook, documented AI review and privacy checks. Uploaded to private GitHub; Tableau remains local and unpublished.
+7. **Portfolio release — complete:** reproducible source build, accepted workbook, documented AI review and privacy checks. Available on public GitHub after the authorized visibility change; Tableau remains local and unpublished.
 
 ## Scope and constraints
 
@@ -29,4 +29,4 @@ The completed work includes synthetic generation, SQLite analysis and validated 
 
 ## Completed deliverables and optional extensions
 
-A measurement plan, data dictionary, synthetic quality checks, SQLite purchase/revenue reconciliation, funnel/acquisition analysis and reviewed synthetic report are implemented. The BigQuery synthetic demonstration is verified; real source mapping and analysis, production warehouse operation remain planned. Three local dashboards, a prioritized hypothesis report and an unexecuted experiment protocol are prepared. The private synthetic portfolio release has completed the documented Tableau acceptance checks.
+A measurement plan, data dictionary, synthetic quality checks, SQLite purchase/revenue reconciliation, funnel/acquisition analysis and reviewed synthetic report are implemented. The BigQuery synthetic demonstration is verified; real source mapping and analysis, production warehouse operation remain planned. Three local dashboards, a prioritized hypothesis report and an unexecuted experiment protocol are prepared. The synthetic portfolio release has completed the documented Tableau acceptance checks.

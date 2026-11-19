@@ -1,6 +1,6 @@
 # Synthetic demonstration: proposed investigations
 
-These are prioritized hypotheses for learning how to investigate a funnel, not findings about Puffy or real customers. The simulation deliberately encodes behavior. No intervention was run, and no causal effect or revenue improvement is claimed. Before commercial action, repeat measurement and reconciliation independently on appropriately authorized real data.
+These are prioritized hypotheses for learning how to investigate a funnel, not findings about real customers. The simulation deliberately encodes behavior. No intervention was run, and no causal effect or revenue improvement is claimed. Before commercial action, repeat measurement and reconciliation independently on appropriately authorized real data.
 
 | Priority | Observation in the simulation | Uncertainty and alternative explanation | Testable change to consider after evidence review | Success metric and evidence needed |
 |---|---|---|---|---|

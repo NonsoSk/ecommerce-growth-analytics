@@ -1,6 +1,6 @@
 # Simulation assumptions and reproducibility
 
-**SYNTHETIC ONLY. Not evidence about Puffy or any real customers.** No real data was used to set probabilities, prices or spend. There is no successful experiment or simulated uplift claim.
+**SYNTHETIC ONLY. Not evidence about real customer behaviour.** No real data was used to set probabilities, prices or spend. There is no successful experiment or simulated uplift claim.
 
 - Standard library `random.Random(seed)` isolates the random stream. Default seed is 42, size is 2,700 sessions and first date is 2026-01-01. The window is always 90 UTC days. Reproducibility is verified on the existing Python 3.14 environment; revalidate byte hashes after interpreter or generator changes.
 - Session days are evenly allocated by index; start times are random within the first 85,001 seconds of each day, leaving room for the full journey. With fewer than 90 sessions, some days have no traffic, while spend still covers every day. Session IDs need not sort chronologically; timestamps do.

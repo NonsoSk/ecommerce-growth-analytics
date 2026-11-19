@@ -20,6 +20,6 @@ Connect sources gradually with least-privilege access. Document field mappings, 
 
 The initial authentication blocker is resolved. GitHub CLI verified the active account as `NonsoSk` and the repository as private. Origin is `https://github.com/NonsoSk/ecommerce-growth-analytics.git`. Remote inspection and fetch found no branches or commits; no existing remote files needed reconciliation.
 
-The reviewed initial setup was pushed to `main`, with upstream `origin/main`. Its local and remote commit hashes matched after upload. Keep the repository private, inspect future remote changes before pushing, and never force-push. This source-control connection does not establish any analytics integration.
+The reviewed initial setup was pushed to `main`, with upstream `origin/main`. Its local and remote commit hashes matched after upload. That initial upload was private. Inspect future remote changes before pushing, and never force-push. This source-control connection does not establish any analytics integration.
 
-Current GitHub status: the accepted private release and reviewer documentation were uploaded on November 19, 2026. The current commit is visible in Git history; initial-setup details above are historical. No analytics source connection follows from this GitHub upload.
+Current GitHub status: the accepted release and reviewer documentation were uploaded on November 19, 2026. The repository was subsequently made public with explicit authorization; Tableau remains unpublished. The current commit is visible in Git history; initial-setup details above are historical. No analytics source connection follows from this GitHub upload.

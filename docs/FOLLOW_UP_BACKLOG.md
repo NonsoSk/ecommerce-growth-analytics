@@ -1,6 +1,6 @@
 # Follow-up backlog — not completed analysis
 
-Simulation validation demonstrates arithmetic and pipeline behavior. It does not establish evidence about Puffy, real customer behavior, causal effects or a successful experiment. The items below are scoped investigations, not findings or authorization to connect accounts.
+Simulation validation demonstrates arithmetic and pipeline behavior. It does not establish evidence about real customer behavior, causal effects or a successful experiment. The items below are scoped investigations, not findings or authorization to connect accounts.
 
 | Priority | Follow-up | Proposed method and required inputs | Acceptance criteria / limits |
 | --- | --- | --- | --- |
