@@ -1,6 +1,6 @@
 # E-commerce Growth Analytics
 
-**Accepted private portfolio release · synthetic demonstration only.** This project models a fictional direct-to-consumer mattress retailer. It contains no real customer data, findings about Puffy, measured revenue improvements or executed experiments.
+This project models a fictional direct-to-consumer mattress retailer. It contains no real customer data, findings about Puffy, measured revenue improvements or executed experiments.
 
 An online retailer needs to understand where journeys stop, whether purchases and revenue agree across records, and how acquisition performance varies before deciding what to investigate. I built a reproducible Python/SQL workflow and three local Tableau dashboards to answer those questions with fictional data. The documented synthetic portfolio scope is complete; real-source ingestion and production operation remain future work.
 
